@@ -1,7 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://d321gjiktoeud"]
+[gd_scene load_steps=3 format=3 uid="uid://d321gjiktoeud"]
 
 [ext_resource type="PackedScene" uid="uid://d38oy7bn5mgol" path="res://sceen/debug_sceen.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cbpyklplyllkh" path="res://sceen/DebugSceen.cs" id="2_0xm2m"]
 
 [node name="main" type="Node"]
 
 [node name="debugSceen" parent="." instance=ExtResource("1_ig7tw")]
+script = ExtResource("2_0xm2m")
