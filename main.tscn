@@ -1,9 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://d321gjiktoeud"]
+[gd_scene load_steps=7 format=3 uid="uid://d321gjiktoeud"]
 
 [ext_resource type="PackedScene" uid="uid://d38oy7bn5mgol" path="res://sceen/debug_sceen.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cbpyklplyllkh" path="res://sceen/DebugSceen.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://ckju13yurrwlg" path="res://script/Player.cs" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://0ju01jfrsdoh" path="res://icon.svg" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://dv2hig54vke3y" path="res://idk.png" id="5_lquwl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lquwl"]
+radius = 64.00781
 
 [node name="main" type="Node"]
 
 [node name="debugSceen" parent="." instance=ExtResource("1_ig7tw")]
 script = ExtResource("2_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="debugSceen"]
+texture = ExtResource("3_h2yge")
+
+[node name="Player" type="CharacterBody2D" parent="debugSceen"]
+script = ExtResource("3_1bvp3")
+moveSpeed = 600.0
+moveAcc = 1000.0
+eatAcc = 3000.0
+eatModeTime = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="debugSceen/Player"]
+shape = SubResource("CircleShape2D_lquwl")
+
+[node name="Sprite" type="Sprite2D" parent="debugSceen/Player"]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("5_lquwl")
+offset = Vector2(2, 1)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Camera2D" type="Camera2D" parent="debugSceen/Player"]
+zoom = Vector2(0.5, 0.5)
+process_callback = 0
+position_smoothing_enabled = true
