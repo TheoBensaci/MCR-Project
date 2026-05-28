@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://d321gjiktoeud"]
+[gd_scene load_steps=9 format=3 uid="uid://d321gjiktoeud"]
 
 [ext_resource type="PackedScene" uid="uid://d38oy7bn5mgol" path="res://sceen/debug_sceen.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cbpyklplyllkh" path="res://sceen/DebugSceen.cs" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://ckju13yurrwlg" path="res://script/Player.cs" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://0ju01jfrsdoh" path="res://icon.svg" id="3_h2yge"]
 [ext_resource type="Texture2D" uid="uid://dv2hig54vke3y" path="res://idk.png" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://ct0q5dg3h7vyu" path="res://Shop.cs" id="6_5vw27"]
+[ext_resource type="Texture2D" uid="uid://cedybe4ed6763" path="res://shop_bg.png" id="6_7mycd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lquwl"]
 radius = 64.00781
@@ -39,3 +41,157 @@ region_rect = Rect2(0, 0, 32, 32)
 zoom = Vector2(0.5, 0.5)
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="Shop" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_5vw27")
+
+[node name="ColorRect" type="ColorRect" parent="Shop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 133.0
+offset_top = -568.0
+offset_right = 600.0
+offset_bottom = -179.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18566129, 0.8101309, 0.79080844, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 145.0
+offset_top = 41.0
+offset_right = -122.0
+offset_bottom = -348.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Shop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 112.0
+offset_top = -569.0
+offset_right = 625.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_7mycd")
+stretch_mode = 5
+
+[node name="WeaponSlots" type="HBoxContainer" parent="Shop"]
+layout_mode = 0
+offset_left = 232.0
+offset_top = -330.0
+offset_right = 540.0
+offset_bottom = -290.0
+
+[node name="Slot1" type="Panel" parent="Shop/WeaponSlots"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="BalaisElectrique" type="TextureRect" parent="Shop/WeaponSlots/Slot1"]
+layout_mode = 0
+offset_left = 206.0
+offset_top = -206.0
+offset_right = 306.0
+offset_bottom = -166.0
+
+[node name="Arme" type="Label" parent="Shop/WeaponSlots/Slot1"]
+layout_mode = 0
+offset_left = -28.0
+offset_top = 41.0
+offset_right = 100.0
+offset_bottom = 64.0
+text = "Balais éléctrique"
+
+[node name="Prix" type="Label" parent="Shop/WeaponSlots/Slot1"]
+layout_mode = 0
+offset_left = -64.0
+offset_top = 43.0
+offset_right = -24.0
+offset_bottom = 66.0
+text = "400"
+
+[node name="Acheter" type="Button" parent="Shop/WeaponSlots/Slot1"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -39.0
+offset_right = 84.0
+offset_bottom = -8.0
+text = "Acheter"
+
+[node name="Slot2" type="Panel" parent="Shop/WeaponSlots"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Gants" type="TextureRect" parent="Shop/WeaponSlots/Slot2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Arme" type="Label" parent="Shop/WeaponSlots/Slot2"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 43.0
+offset_right = 91.0
+offset_bottom = 66.0
+text = "Gants"
+
+[node name="Prix" type="Label" parent="Shop/WeaponSlots/Slot2"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 44.0
+offset_right = 53.0
+offset_bottom = 67.0
+text = "500"
+
+[node name="Acheter" type="Button" parent="Shop/WeaponSlots/Slot2"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -39.0
+offset_right = 84.0
+offset_bottom = -8.0
+text = "Acheter"
+
+[node name="Slot3" type="Panel" parent="Shop/WeaponSlots"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Pinces" type="TextureRect" parent="Shop/WeaponSlots/Slot3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Arme" type="Label" parent="Shop/WeaponSlots/Slot3"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 48.0
+offset_right = 102.0
+offset_bottom = 71.0
+text = "Pinces"
+
+[node name="Prix" type="Label" parent="Shop/WeaponSlots/Slot3"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 47.0
+offset_right = 57.0
+offset_bottom = 70.0
+text = "600"
+
+[node name="Acheter" type="Button" parent="Shop/WeaponSlots/Slot3"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -39.0
+offset_right = 84.0
+offset_bottom = -8.0
+text = "Acheter"
