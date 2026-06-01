@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0h71yo1dhyke"]
+
+[ext_resource type="Script" uid="uid://ckju13yurrwlg" path="res://script/Player.cs" id="1_o1wbr"]
+[ext_resource type="Texture2D" uid="uid://dv2hig54vke3y" path="res://ressource/sprite/idk.png" id="2_onh3l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lquwl"]
+radius = 64.00781
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 1
+script = ExtResource("1_o1wbr")
+moveSpeed = 600.0
+moveAcc = 500.0
+eatAcc = 1750.0
+arenaRadius = 1100.0
+arenaManagerPath = NodePath("../ArenaManager")
+eatModeTime = 0.25
+eatCouldown = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lquwl")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("2_onh3l")
+offset = Vector2(2, 1)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
