@@ -1,12 +1,68 @@
-[gd_scene load_steps=16 format=3 uid="uid://djoi0c8cadprt"]
+[gd_scene load_steps=27 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/MainSceen.cs" id="1_nbxoa"]
+[ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/CameraPlacement.cs" id="2_vmb3k"]
 [ext_resource type="Texture2D" uid="uid://nsdvrahqvmya" path="res://ressource/sprite/cercle.svg" id="2_wxuq2"]
 [ext_resource type="Script" uid="uid://vkstfk3pj6re" path="res://script/ArenaManager.cs" id="3_vmb3k"]
 [ext_resource type="PackedScene" uid="uid://dnjns5dqjes04" path="res://object/item_wrapper.tscn" id="4_w853a"]
 [ext_resource type="PackedScene" uid="uid://b0h71yo1dhyke" path="res://object/player.tscn" id="5_3npiu"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
 [ext_resource type="PackedScene" uid="uid://te7q2hofmhuy" path="res://object/shop_keeper.tscn" id="7_wxuq2"]
+
+[sub_resource type="Resource" id="Resource_w853a"]
+script = ExtResource("2_vmb3k")
+shopKeeperTargetPos = Vector2(0, 2700)
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_vmb3k"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(0, 5400)
+shopKeeperTargetPos = Vector2(0, 4900)
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_3npiu"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(2700, 2700)
+shopKeeperTargetPos = Vector2(2700, 2200)
+shopKeeperState = 1
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_mm3g7"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(0, 2700)
+shopKeeperTargetPos = Vector2(0, 2200)
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_n6ppy"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(-2700, 2700)
+shopKeeperTargetPos = Vector2(-2700, 2200)
+shopKeeperState = 2
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wxuq2"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vmb3k"]
+noise = SubResource("FastNoiseLite_wxuq2")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_w853a"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5273973)
+colors = PackedColorArray(0.14580001, 0.14580001, 0.18, 0.39215687, 0.14400001, 0.14400001, 0.18, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3npiu"]
+gradient = SubResource("Gradient_w853a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mm3g7"]
+shader = ExtResource("6_mm3g7")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_vmb3k")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.75
+shader_parameter/color_gardient = SubResource("GradientTexture1D_3npiu")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_7mycd"]
 
@@ -25,7 +81,7 @@ seamless = true
 [sub_resource type="Gradient" id="Gradient_4c57u"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0.13013698, 0.6164383)
-colors = PackedColorArray(0.2627451, 0.2627451, 0.43529412, 0, 0.08627451, 0.08627451, 0.16470589, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.032621723, 0.03260776, 0.08087004, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_efxa6"]
 gradient = SubResource("Gradient_4c57u")
@@ -42,19 +98,36 @@ shader_parameter/position_impact = 0.7999999821184
 shader_parameter/color_gardient = SubResource("GradientTexture1D_efxa6")
 
 [sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
-font_size = 40
+font_size = 60
 
 [node name="MainSceen" type="Node2D"]
 script = ExtResource("1_nbxoa")
+ShopkeeperPath = NodePath("ShopKeeper")
 CameraTargetPath = NodePath("CameraTarget")
-CameraPositions = Dictionary[String, Vector2]({
-"Arena": Vector2(0, 0),
-"Shop": Vector2(0, 2700)
+CameraPlacement = Dictionary[String, ExtResource("2_vmb3k")]({
+"Arena": SubResource("Resource_w853a"),
+"Bet": SubResource("Resource_3npiu"),
+"GameOver": SubResource("Resource_n6ppy"),
+"Score": SubResource("Resource_mm3g7"),
+"Shop": SubResource("Resource_vmb3k")
 })
 
 [node name="Background" type="Sprite2D" parent="."]
-modulate = Color(0.21950102, 0.21950102, 0.21950102, 1)
+modulate = Color(0.2296, 0.2296, 0.28, 1)
 scale = Vector2(2, 2)
+texture = ExtResource("2_wxuq2")
+
+[node name="Background2" type="Sprite2D" parent="."]
+modulate = Color(0.2296, 0.2296, 0.28, 1)
+material = SubResource("ShaderMaterial_mm3g7")
+scale = Vector2(1.386236, 1.386236)
+texture = ExtResource("2_wxuq2")
+
+[node name="Background2" type="Sprite2D" parent="Background2"]
+modulate = Color(0.2296, 0.2296, 0.28, 1)
+material = SubResource("ShaderMaterial_mm3g7")
+position = Vector2(-7.6293945e-06, -7.6293945e-06)
+scale = Vector2(0.51576275, 0.51576275)
 texture = ExtResource("2_wxuq2")
 
 [node name="CameraTarget" type="Node2D" parent="."]
@@ -74,13 +147,13 @@ nItemAtSpawn = 7
 minItemNumber = 4
 maxItemNumber = 20
 itemWrapperSceen = ExtResource("4_w853a")
+hazards = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("5_3npiu")]
 hpBarPath = NodePath("../PlayerHpBar")
 moneyDisplayPath = NodePath("../Label")
 
 [node name="Cercle" type="Sprite2D" parent="."]
-modulate = Color(0.21950102, 0.21950102, 0.21950102, 1)
 z_index = 3
 material = SubResource("ShaderMaterial_272bh")
 scale = Vector2(2, 2)
@@ -106,3 +179,47 @@ horizontal_alignment = 1
 
 [node name="ShopKeeper" parent="." instance=ExtResource("7_wxuq2")]
 position = Vector2(-367, 287)
+movementSpeed = 3.0
+destinationRadiuse = 400.0
+eyeMovementRadiuse = Vector2(60, 30)
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = -250.0
+offset_top = 2700.0
+offset_right = 250.0
+offset_bottom = 2800.0
+pivot_offset = Vector2(250, 50)
+text = "Score"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="ShopLabel" type="Label" parent="."]
+offset_left = -250.0
+offset_top = 5400.0
+offset_right = 250.0
+offset_bottom = 5569.0
+pivot_offset = Vector2(250, 50)
+text = "Shop
+"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="BetLabel" type="Label" parent="."]
+offset_left = 2700.0
+offset_top = 2700.0
+offset_right = 3200.0
+offset_bottom = 2800.0
+pivot_offset = Vector2(250, 50)
+text = "BET"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="GameOverLabel" type="Label" parent="."]
+offset_left = -2700.0
+offset_top = 2700.0
+offset_right = -2200.0
+offset_bottom = 2800.0
+pivot_offset = Vector2(250, 50)
+text = "Game over "
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1

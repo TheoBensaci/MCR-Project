@@ -51,15 +51,16 @@ public partial class ArenaManager : Node
     public int targetMoney { get; set; } = 100;
 
     [ExportSubgroup("Hazard")]
+
+    [Export]
+    public int actualHazardLevel { get; set; } = 0;
+
     [Export]
     public double spawnHazardTime { get; set; } = 10;
     private double _spawnHazardTimer = 0;
 
     [Export]
-    public PackedScene hazardBombScene { get; set; }
-    [Export]
-    public PackedScene hazardLaserScene { get; set; }
-
+    public Godot.Collections.Array<PackedScene> hazards {get;set;}
 
 
     public Vector2 GetRandomPos(){
@@ -93,31 +94,23 @@ public partial class ArenaManager : Node
     }
 
     public void SpawnHazard(){
-        SpawnHazard(new Vector2(0, 0));
+        SpawnHazard(GetRandomPos());
     }
 
     public void SpawnHazard(Vector2 position){
-        bool isBomb = GD.Randf() < 0.5f;
-        PackedScene scene = isBomb ? hazardBombScene : hazardLaserScene;
-        
-        if(scene==null){
-            GD.PushError("[ArenaManager] hazard scene is null!");
-            return;
-        }
-        
+        if(hazards.Count==0)return;
+
+        PackedScene scene = hazards[(int)GD.Randi()%hazards.Count];
+
         Node2D hazard = (Node2D)scene.Instantiate();
         hazard.Position = position;
-        
-        if(!isBomb){
-            hazard.Rotation = GD.Randf() * Mathf.Tau;
-        }
-        
+
         AddChild(hazard);
     }
 
     public void SpawnRandomHazard(){
         float angle = GD.Randf() * Mathf.Tau;
-        float dist = GD.Randf() * (arenaRadius - 200) + 100; 
+        float dist = GD.Randf() * (arenaRadius - 200) + 100;
         Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dist;
         SpawnHazard(pos);
     }
