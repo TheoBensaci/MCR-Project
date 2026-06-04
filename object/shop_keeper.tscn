@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://te7q2hofmhuy"]
+
+[ext_resource type="Texture2D" uid="uid://bmf0sqcwxlo5d" path="res://ressource/shopkeeper.png" id="1_7v6wr"]
+
+[sub_resource type="Animation" id="Animation_i0ldg"]
+resource_name = "Idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c6gmj"]
+_data = {
+&"Idle": SubResource("Animation_i0ldg")
+}
+
+[node name="ShopKeeper" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_c6gmj")
+}
+
+[node name="SpriteContainer" type="Node2D" parent="."]
+
+[node name="Body" type="Sprite2D" parent="SpriteContainer"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_7v6wr")
+region_enabled = true
+region_rect = Rect2(0, 0, 523, 522)
+
+[node name="Mouth2" type="Sprite2D" parent="SpriteContainer/Body"]
+visible = false
+texture = ExtResource("1_7v6wr")
+region_enabled = true
+region_rect = Rect2(710, 132, 316, 300)
+
+[node name="Eye" type="Sprite2D" parent="SpriteContainer/Body/Mouth2"]
+texture = ExtResource("1_7v6wr")
+region_enabled = true
+region_rect = Rect2(850, 541, 37, 123)
+
+[node name="Mouth" type="Sprite2D" parent="SpriteContainer/Body"]
+texture = ExtResource("1_7v6wr")
+region_enabled = true
+region_rect = Rect2(98, 535, 318, 135)
