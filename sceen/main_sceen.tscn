@@ -1,10 +1,11 @@
+
 [gd_scene load_steps=16 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Texture2D" uid="uid://nsdvrahqvmya" path="res://ressource/sprite/cercle.svg" id="2_wxuq2"]
 [ext_resource type="Script" uid="uid://vkstfk3pj6re" path="res://script/ArenaManager.cs" id="3_vmb3k"]
-[ext_resource type="PackedScene" uid="uid://dnjns5dqjes04" path="res://object/item_wrapper.tscn" id="4_w853a"]
-[ext_resource type="PackedScene" uid="uid://b0h71yo1dhyke" path="res://object/player.tscn" id="5_3npiu"]
+[ext_resource type="PackedScene" path="res://object/item_wrapper.tscn" id="4_w853a"]
+[ext_resource type="PackedScene" path="res://object/player.tscn" id="5_3npiu"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
 [ext_resource type="PackedScene" uid="uid://te7q2hofmhuy" path="res://object/shop_keeper.tscn" id="7_wxuq2"]
 
@@ -74,6 +75,8 @@ nItemAtSpawn = 7
 minItemNumber = 4
 maxItemNumber = 20
 itemWrapperSceen = ExtResource("4_w853a")
+hazardBombScene = ExtResource("8_hazbomb")
+hazardLaserScene = ExtResource("9_hazlaser")
 
 [node name="Player" parent="." instance=ExtResource("5_3npiu")]
 hpBarPath = NodePath("../PlayerHpBar")
