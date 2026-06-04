@@ -3,19 +3,19 @@
 
 
 ## TODO
-- [ _ ] item system
+- **[ X ]** item system
   - **[ X ]** spawn item
   - **[ X ]** item decoration
   - **[ X ]** wrapper
-  - [ _ ] item player hook
-  - [ _ ] item sell
+  - **[ X ]** item player hook
+  - **[ X ]** item sell
 
-- [ _ ] player
+- **[ X ]** player
   - **[ X ]** player base movement
     - **[ X ]** eat
     - **[ X ]** move
-  - [ _ ] hp system
-  - [ _ ] take damage
+  - **[ X ]** hp system
+  - **[ X ]** take damage
 
 - [ _ ] Shoopkeeper
   - [ _ ] ask money

@@ -1,4 +1,5 @@
-[gd_scene load_steps=17 format=3 uid="uid://djoi0c8cadprt"]
+
+[gd_scene load_steps=16 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Texture2D" uid="uid://nsdvrahqvmya" path="res://ressource/sprite/cercle.svg" id="2_wxuq2"]
@@ -6,8 +7,7 @@
 [ext_resource type="PackedScene" path="res://object/item_wrapper.tscn" id="4_w853a"]
 [ext_resource type="PackedScene" path="res://object/player.tscn" id="5_3npiu"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
-[ext_resource type="PackedScene" path="res://object/hazard_bomb.tscn" id="8_hazbomb"]
-[ext_resource type="PackedScene" path="res://object/hazard_laser.tscn" id="9_hazlaser"]
+[ext_resource type="PackedScene" uid="uid://te7q2hofmhuy" path="res://object/shop_keeper.tscn" id="7_wxuq2"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_7mycd"]
 
@@ -106,3 +106,6 @@ offset_bottom = -934.0
 text = "999 / 3902193021"
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+
+[node name="ShopKeeper" parent="." instance=ExtResource("7_wxuq2")]
+position = Vector2(-367, 287)
