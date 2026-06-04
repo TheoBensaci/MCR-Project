@@ -1,5 +1,8 @@
 
-public enum ItemGroup{
+using System;
+using System.Collections.Generic;
+
+public enum ItemTag{
     none,
     g1,
     g2
@@ -10,14 +13,27 @@ public interface Item{
     /// <summary>
     /// Get item group of this item
     /// </summary>
-    public ItemGroup GetGroup();
+    public List<ItemTag> GetTags();
 
     /// <summary>
     /// function call by the player when this item is eat
     /// </summary>
     /// <param name="pl">actual player</param>
-    /// <returns>if the OnEat chain need to continue (return true) else (return false)</returns>
-    public bool OnEat(Player pl);
+    public void OnEat(Player pl);
 
     public int GetPrice();
+
+    public List<string> getIcons();
+
+    /*
+        The update function familie are callbacks use to implement effect when a item was eaten
+        They are call on event during certain even and return a boolean, if one of thoses function return a false, the item is earse and
+        will not longer be updated
+    */
+
+
+    public bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena);
+
+    public bool Update(Player player, ArenaManager arena, double delta_t);
+
 }

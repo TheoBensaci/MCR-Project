@@ -8,8 +8,8 @@ public class TestItemDeco : AbstractItemDecorator
     {
     }
 
-    public override bool OnEat(Player pl){
+    public override void OnEat(Player pl){
         GD.Print("We test");
-        return p_baseItem.OnEat(pl);
+        base.OnEat(pl);
     }
 }

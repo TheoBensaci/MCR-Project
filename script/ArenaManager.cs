@@ -1,13 +1,24 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.IO;
-
 
 public partial class ArenaManager : Node
 {
+    [ExportSubgroup("arenna")]
     [Export]
     public float arenaRadius { get; set; } = 2000;
 
+    [ExportSubgroup("decorateur spawn")]
+    [Export]
+    public Godot.Collections.Dictionary<string, float> weightBaseItem = new Godot.Collections.Dictionary<string, float>();
+    [Export]
+    public Godot.Collections.Dictionary<string, float> weightAddDecorateurItem = new Godot.Collections.Dictionary<string, float>();
+    [Export]
+    public Godot.Collections.Dictionary<int, float> weightNumberOfDecorateurItem = new Godot.Collections.Dictionary<int, float>();
+
+
+    [ExportSubgroup("item spawn")]
     [Export]
     public float itemSpawnPadding { get; set; } = 100;
 
@@ -19,9 +30,6 @@ public partial class ArenaManager : Node
     public double spawnItemTime { get; set; } = 2;
     private double _spawnItemTimer = 0;
 
-
-
-
     [Export]
     public int nItemAtSpawn { get; set; } = 20;
 
@@ -32,10 +40,12 @@ public partial class ArenaManager : Node
     public int maxItemNumber { get; set; } = 3;
 
 
+    [ExportSubgroup("item wrapper")]
     [Export]
     public PackedScene itemWrapperSceen { get; set; }
 
     public Player playerInstance;
+
 
 
     public void SpawnItem(){
@@ -47,15 +57,17 @@ public partial class ArenaManager : Node
         buffer.Position = new Vector2(GD.Randf()*2-1,GD.Randf()*2-1).Normalized() *
         ( GD.Randf() * (arenaRadius - (minItemSpawnRadius + itemSpawnPadding)) + minItemSpawnRadius);
 
+        // generate decorateurs
+        List<string> decorators = new List<string>(){
+            UtilsRandom.GetRandomResult(weightBaseItem,GD.Randf(),"")
+        };
 
-        // init item
-        Item item = new BaseItem();
+        int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
+        // add base tag
 
-        item = new TestItemDeco(item);
 
-        // add decorator
-
-        buffer.item=item;
+        // create item
+        buffer.item=ItemFactory.CreateItem(decorators.ToArray());
 
         AddChild(buffer);
     }

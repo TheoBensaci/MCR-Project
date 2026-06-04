@@ -1,12 +1,14 @@
 
 
+using System;
+using System.Collections.Generic;
 using Godot;
 
 public class BaseItem : Item
 {
-    public ItemGroup GetGroup()
+    public List<ItemTag> GetTags()
     {
-        return ItemGroup.none;
+        return new List<ItemTag>();
     }
 
     public int GetPrice()
@@ -14,9 +16,20 @@ public class BaseItem : Item
         return 0;
     }
 
-    public bool OnEat(Player pl)
+    public void OnEat(Player pl)
     {
-        GD.Print("nom nom "+pl.Name);
-        return true;
+
+    }
+
+    public List<string> getIcons(){
+        return new List<string>();
+    }
+
+    public bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){
+        return false;
+    }
+
+    public bool Update(Player player, ArenaManager arena, double delta_t){
+        return false;
     }
 }

@@ -12,8 +12,8 @@
 
 - [ _ ] player
   - **[ X ]** player base movement
-    - [ _ ] eat
-    - [ _ ] move
+    - **[ X ]** eat
+    - **[ X ]** move
   - [ _ ] hp system
   - [ _ ] take damage
 

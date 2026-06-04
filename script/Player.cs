@@ -5,14 +5,20 @@ public partial class Player : CharacterBody2D
 {
 
     // genral
+    [ExportSubgroup("General")]
     [Export]
     public bool isDead { get; set; } = false;
 
+    [ExportSubgroup("HP Systeme")]
     [Export]
-    public float actualTimeHP { get; set; } = 30;      // actual time remainging in sec
+    public double actualTimeHP { get; set; } = 30;      // actual time remainging in sec
     [Export]
-    public float maxTimeHP { get; set; } = 30;         // max time in sec
+    public double maxTimeHP { get; set; } = 30;         // max time in sec
 
+    [Export]
+    public double lossingHpRate { get; set; } = 1;         // losing hp rate
+
+    [ExportSubgroup("Movement")]
     [Export]
     public float moveSpeed { get; set; } = 500;
 
@@ -21,22 +27,6 @@ public partial class Player : CharacterBody2D
 
     [Export]
     public float eatAcc { get; set; } = 2000;
-
-
-    [Export]
-    public float arenaRadius { get; set; } = 2000;
-
-    [Export]
-    public NodePath arenaManagerPath { get; set; }
-
-    private ArenaManager _arenaManger=null;
-
-
-
-
-    // state
-    [Export]
-    public bool onEat { get; set; } = false;
 
     [Export]
     public double eatModeTime { get; set; } = 0.2;
@@ -47,6 +37,28 @@ public partial class Player : CharacterBody2D
     public double eatCouldown { get; set; } = 0.2;
 
     private double _eatCouldownTimer =0;
+
+
+
+    [ExportSubgroup("Arena")]
+    [Export]
+    public NodePath arenaManagerPath { get; set; }
+
+    private ArenaManager _arenaManger=null;
+
+    [ExportSubgroup("UI")]
+    // player UI
+    [Export]
+    public NodePath HpBarPath { get; set; }
+    private ProgressBar _hpBar;
+
+
+
+
+    [ExportSubgroup("Stats")]
+    // state
+    [Export]
+    public bool onEat { get; set; } = false;
 
     private Sprite2D _sprite;
 
@@ -129,14 +141,22 @@ public partial class Player : CharacterBody2D
 
         // set animation to idle
 
+        Position = new Vector2(0,0);
+
     }
 
     public void Damage(float amount){
         actualTimeHP-=amount;
+        UpdateHpBar();
     }
 
     public void Kill(){
         isDead=true;
+    }
+
+
+    public void UpdateHpBar(){
+        _hpBar.Value= actualTimeHP/maxTimeHP * 100;
     }
 
 
@@ -173,6 +193,15 @@ public partial class Player : CharacterBody2D
             GD.PushError("arena manager path is missing or invalide");
         }
 
+
+        if(GetNode(HpBarPath) is ProgressBar hpbar){
+            _hpBar=hpbar;
+        }
+        else{
+            GD.PushError("hp bar path is missing or invalide");
+        }
+
+
         Spawn();
     }
 
@@ -193,7 +222,12 @@ public partial class Player : CharacterBody2D
             _eatCouldownTimer-=delta;
         }
 
-        if(actualTimeHP<=0){
+
+        if(actualTimeHP>=0){
+            actualTimeHP-=delta * lossingHpRate;
+            UpdateHpBar();
+        }
+        else{
             Kill();
         }
     }

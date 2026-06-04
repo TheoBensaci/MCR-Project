@@ -1,5 +1,7 @@
 
 
+using System;
+using System.Collections.Generic;
 using System.Formats.Asn1;
 
 public abstract class AbstractItemDecorator : Item
@@ -11,9 +13,9 @@ public abstract class AbstractItemDecorator : Item
         p_baseItem=baseItem;
     }
 
-    public virtual ItemGroup GetGroup()
+    public virtual List<ItemTag> GetTags()
     {
-        return p_baseItem.GetGroup();
+        return p_baseItem.GetTags();
     }
 
     public virtual int GetPrice()
@@ -21,8 +23,20 @@ public abstract class AbstractItemDecorator : Item
         return p_baseItem.GetPrice();
     }
 
-    public virtual bool OnEat(Player pl)
+    public virtual void OnEat(Player pl)
     {
-        return p_baseItem.OnEat(pl);
+        p_baseItem.OnEat(pl);
+    }
+
+    public virtual List<string> getIcons(){
+        return p_baseItem.getIcons();
+    }
+
+    public virtual bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){
+        return p_baseItem.UpdateOnEat(player,eatedItem,arena);
+    }
+
+    public virtual bool Update(Player player, ArenaManager arena, double delta_t){
+        return p_baseItem.Update(player,arena,delta_t);
     }
 }
