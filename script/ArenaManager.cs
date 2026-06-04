@@ -46,24 +46,34 @@ public partial class ArenaManager : Node
 
     public Player playerInstance;
 
+    [ExportSubgroup("stats")]
+    [Export]
+    public int targetMoney { get; set; } = 100;
 
 
-    public void SpawnItem(){
+
+    public Vector2 GetRandomPos(){
+        return new Vector2(GD.Randf()*2-1,GD.Randf()*2-1).Normalized() *
+        ( GD.Randf() * (arenaRadius - (minItemSpawnRadius + itemSpawnPadding)) + minItemSpawnRadius);
+    }
+
+    public void SpawnItem(Vector2 pos){
         // make a buffer with a ItemWrapper class
         ItemWrapper buffer = (ItemWrapper)itemWrapperSceen.Instantiate();
 
         // set position
-        // TODO check if the place is free befor to have a better repartition
-        buffer.Position = new Vector2(GD.Randf()*2-1,GD.Randf()*2-1).Normalized() *
-        ( GD.Randf() * (arenaRadius - (minItemSpawnRadius + itemSpawnPadding)) + minItemSpawnRadius);
+        buffer.Position = pos;
 
         // generate decorateurs
         List<string> decorators = new List<string>(){
             UtilsRandom.GetRandomResult(weightBaseItem,GD.Randf(),"")
         };
 
-        int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
+        //int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
         // add base tag
+
+        decorators.Add("Test");
+        decorators.Add("Update");
 
 
         // create item
@@ -75,7 +85,7 @@ public partial class ArenaManager : Node
     public void StartArena(){
         for (int i = 0; i < nItemAtSpawn; i++)
         {
-            SpawnItem();
+            SpawnItem(GetRandomPos());
         }
         if(playerInstance!=null)playerInstance.Spawn();
     }
@@ -90,7 +100,7 @@ public partial class ArenaManager : Node
 
         // spawn timer
         if(_spawnItemTimer>=spawnItemTime && GetChildCount()<maxItemNumber){
-            SpawnItem();
+            SpawnItem(GetRandomPos());
             _spawnItemTimer=0;
         }
         else{
@@ -100,7 +110,7 @@ public partial class ArenaManager : Node
         if(GetChildCount()<minItemNumber){
             for (int i = 0; i < minItemNumber-GetChildCount(); i++)
             {
-                SpawnItem();
+                SpawnItem(GetRandomPos());
             }
         }
 

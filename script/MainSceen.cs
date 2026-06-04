@@ -39,7 +39,6 @@ public partial class MainSceen : Node2D
         else{
             GD.PushError("Camera target path is missing or invalide");
         }
-
     }
 
 }

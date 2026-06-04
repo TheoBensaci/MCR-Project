@@ -11,11 +11,9 @@ z_index = 1
 script = ExtResource("1_o1wbr")
 moveSpeed = 600.0
 moveAcc = 500.0
-eatAcc = 1750.0
-arenaRadius = 1100.0
+dashTime = 0.1
+dashCouldown = 0.2
 arenaManagerPath = NodePath("../ArenaManager")
-eatModeTime = 0.25
-eatCouldown = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lquwl")

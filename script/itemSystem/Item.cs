@@ -2,12 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-public enum ItemTag{
-    none,
-    g1,
-    g2
-}
-
 public interface Item{
 
     /// <summary>

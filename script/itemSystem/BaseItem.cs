@@ -13,7 +13,7 @@ public class BaseItem : Item
 
     public int GetPrice()
     {
-        return 0;
+        return 10;
     }
 
     public void OnEat(Player pl)

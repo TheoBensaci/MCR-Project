@@ -88,38 +88,37 @@ rarity :
 item décoration :
 ^ = not sure
 - speed (or fire effect) : go faster for x time
-- ^slow (or ice) : make you slower for x time
-- ^bomb : spawn 4 bomb on eat (issac style)
 - tp : make tp on a random spot
 - (rare) lootbox : create a bunch of junk on eat
+- speedy : make go a little faster, the more you eat, the faster you go
+- heal : recover N hp
+- invulerability : prevent dega
+- greedy : make every item eat price x 2, stop if nothing is eated for 0.5sec
+
+- (BAD) faite : make bad item effect lease rare
 - (BAD) spike : hurt the player
 - (BAD) poison : cut the player hp in half
 - (BAD) curse : hurt the player but only if he stop eating for N sec, reset with every eated item
-- ^(rare) hole : create a hole in which, the player is insta kill on eat (after 2 sec)
-- speedy : make go a little faster, the more you eat, the faster you go
-- (BAD) faite : make bad item effect lease rare
-- ...
 - ? : get a random effect (every effect as the same rarity in this case)
 
 i think, bad effect should be rare but earn more money then any effect
 
 Powerup :
-- the more X item you have, the faster you go
-- prevent X type of damage to damage the player
-- ^prevent slow from slowing the player
-- ^make the player able to eat bomb (bomb give a lot of money but hurt the player)
-- being hit spawn as chance to spawn a godly item beside the player
-- X item add a little time
-- 1.15 * player hp
-- block 1 damage pare round
-- add a small invulerability when eating a item
+- price : moyen| prevent X type of damage to damage the player
+- price : pas chère| being hit spawn as chance to spawn a godly item beside the player
+- price : moyen| X item add a little time
+- price : chère| make every item have a N decorator
+- price : moyen| 1.15 * player hp
+- price : pas chère| block 1 damage pare round
+- price : chère| add a small invulerability when eating a item
+- price : pas chère| make N decorator more likly
+
 
 
 
 bet :
 - get N certain type of item
-- get N certain item décoration
 - dont get hit
-- do not get a certain type of item
-- find a lootbox
+- get a specific decorator
 - passe the round with a max hazard level
+-

@@ -8,6 +8,11 @@ public class TestItemDeco : AbstractItemDecorator
     {
     }
 
+    public override int GetPrice()
+    {
+        return base.GetPrice() + 10;
+    }
+
     public override void OnEat(Player pl){
         GD.Print("We test");
         base.OnEat(pl);
