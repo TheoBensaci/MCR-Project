@@ -50,6 +50,16 @@ public partial class ArenaManager : Node
     [Export]
     public int targetMoney { get; set; } = 100;
 
+    [ExportSubgroup("Hazard")]
+    [Export]
+    public double spawnHazardTime { get; set; } = 10;
+    private double _spawnHazardTimer = 0;
+
+    [Export]
+    public PackedScene hazardBombScene { get; set; }
+    [Export]
+    public PackedScene hazardLaserScene { get; set; }
+
 
 
     public Vector2 GetRandomPos(){
@@ -80,6 +90,36 @@ public partial class ArenaManager : Node
         buffer.item=ItemFactory.CreateItem(decorators.ToArray());
 
         AddChild(buffer);
+    }
+
+    public void SpawnHazard(){
+        SpawnHazard(new Vector2(0, 0));
+    }
+
+    public void SpawnHazard(Vector2 position){
+        bool isBomb = GD.Randf() < 0.5f;
+        PackedScene scene = isBomb ? hazardBombScene : hazardLaserScene;
+        
+        if(scene==null){
+            GD.PushError("[ArenaManager] hazard scene is null!");
+            return;
+        }
+        
+        Node2D hazard = (Node2D)scene.Instantiate();
+        hazard.Position = position;
+        
+        if(!isBomb){
+            hazard.Rotation = GD.Randf() * Mathf.Tau;
+        }
+        
+        AddChild(hazard);
+    }
+
+    public void SpawnRandomHazard(){
+        float angle = GD.Randf() * Mathf.Tau;
+        float dist = GD.Randf() * (arenaRadius - 200) + 100; 
+        Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dist;
+        SpawnHazard(pos);
     }
 
     public void StartArena(){
@@ -115,6 +155,12 @@ public partial class ArenaManager : Node
         }
 
         // hazard timer
+        _spawnHazardTimer += delta;
+        if(_spawnHazardTimer >= spawnHazardTime){
+            SpawnHazard();
+            _spawnHazardTimer = 0;
+        }
+
     }
 
 }

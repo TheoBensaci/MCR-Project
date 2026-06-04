@@ -244,6 +244,13 @@ public partial class Player : CharacterBody2D
         {
             InitDash();
         }
+
+        if (@event.IsActionPressed("spawn_hazard"))
+        {
+            if(_arenaManger!=null){
+                _arenaManger.SpawnRandomHazard();
+            }
+        }
     }
 
 

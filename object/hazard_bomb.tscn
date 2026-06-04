@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://haz4rdbomber"]
+
+[ext_resource type="Script" path="res://script/Hazard.cs" id="1_hazbomb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hazbomb"]
+radius = 250.0
+
+[node name="HazardBomb" type="Node2D"]
+script = ExtResource("1_hazbomb")
+warningShapePath = NodePath("WarningShape")
+activeShapePath = NodePath("ActiveShape")
+damageZonePath = NodePath("DamageZone")
+
+[node name="WarningShape" type="Polygon2D" parent="."]
+z_index = 2
+color = Color(0, 0.8, 1, 0.7)
+polygon = PackedVector2Array(250, 0, 216.506, 125, 125, 216.506, 0, 250, -125, 216.506, -216.506, 125, -250, 0, -216.506, -125, -125, -216.506, 0, -250, 125, -216.506, 216.506, -125)
+
+[node name="ActiveShape" type="Polygon2D" parent="."]
+z_index = 2
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(250, 0, 216.506, 125, 125, 216.506, 0, 250, -125, 216.506, -216.506, 125, -250, 0, -216.506, -125, -125, -216.506, 0, -250, 125, -216.506, 216.506, -125)
+visible = false
+
+[node name="DamageZone" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageZone"]
+shape = SubResource("CircleShape2D_hazbomb")
+
+[connection signal="body_entered" from="DamageZone" to="." method="_on_damage_zone_body_entered"]
