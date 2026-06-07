@@ -14,6 +14,18 @@ public partial class Player : CharacterBody2D
     [Export]
     public int money{get;set;}=0;
 
+    [ExportSubgroup("Animation")]
+    [Export]
+    public AnimationPlayer animPlayer { get; set; }
+
+    [Export]
+    public Sprite2D sprite1 { get; set; }
+
+    [Export]
+    public Sprite2D sprite2 { get; set; }
+
+    private int dashAnimationState=0;
+
     [ExportSubgroup("HP Systeme")]
     [Export]
     public double actualTimeHP { get; set; } = 30;      // actual time remainging in sec
@@ -47,19 +59,15 @@ public partial class Player : CharacterBody2D
 
     [ExportSubgroup("Arena")]
     [Export]
-    public NodePath arenaManagerPath { get; set; }
-
-    private ArenaManager _arenaManger=null;
+    public ArenaManager arenaManager { get; set; }
 
     [ExportSubgroup("UI")]
     // player UI
     [Export]
-    public NodePath hpBarPath { get; set; }
-    private ProgressBar _hpBar;
+    public ProgressBar hpBar { get; set; }
 
     [Export]
-    public NodePath moneyDisplayPath { get; set; }
-    private Label _moneyDisplay;
+    public Label moneyDisplay { get; set; }
 
 
 
@@ -68,8 +76,6 @@ public partial class Player : CharacterBody2D
     // state
     [Export]
     public bool onDash { get; set; } = false;
-
-    private Sprite2D _sprite;
 
 
 
@@ -86,15 +92,18 @@ public partial class Player : CharacterBody2D
 
     #region Dash
     public void InitDash(){
-        if(onDash || _dashCouldownTimer>0)return;
+        if(onDash || _dashCouldownTimer>0 || (_dirVector.X==0 && _dirVector.Y==0))return;
         UpdateDirVector();
         onDash=true;
         this.Velocity = _dirVector * dashAcc;
         this._dashTimer=dashTime;
+
+        animPlayer.Play("initDash");
     }
 
     public void EndDash(){
         if(!onDash)return;
+        dashAnimationState=1;
         onDash=false;
         this._dashCouldownTimer=dashCouldown;
     }
@@ -111,7 +120,6 @@ public partial class Player : CharacterBody2D
                 _updatedItems[i]=_updatedItems[count-1];
                 _updatedItems.RemoveAt(count-1);
                 count--;
-                GD.Print(count);
                 continue;
             }
             i++;
@@ -127,7 +135,7 @@ public partial class Player : CharacterBody2D
         item.OnEat(this);
 
         // update items
-        UpdateItem(it=>it.UpdateOnEat(this,item,_arenaManger));
+        UpdateItem(it=>it.UpdateOnEat(this,item,arenaManager));
 
         // add money
         money+=item.GetPrice();
@@ -188,6 +196,8 @@ public partial class Player : CharacterBody2D
 
     public void Spawn(){
 
+        animPlayer.Play("idle");
+
         isDead=false;
 
         actualTimeHP=maxTimeHP;
@@ -197,6 +207,9 @@ public partial class Player : CharacterBody2D
         // set animation to idle
 
         Position = new Vector2(0,0);
+
+        Velocity=new Vector2(0,0);
+        money=0;
 
         // update UI
         UpdateHpBarUi();
@@ -210,6 +223,7 @@ public partial class Player : CharacterBody2D
     }
 
     public void Kill(){
+        animPlayer.Play("death");
         isDead=true;
     }
 
@@ -218,15 +232,35 @@ public partial class Player : CharacterBody2D
     #region Ui
 
     public void UpdateHpBarUi(){
-        _hpBar.Value= actualTimeHP/maxTimeHP * 100;
+        hpBar.Value= actualTimeHP/maxTimeHP * 100;
     }
 
     public void UpdateMoneyUI(){
-        _moneyDisplay.Text=this.money+" / "+this._arenaManger.targetMoney;
+        moneyDisplay.Text=this.money+" / "+this.arenaManager.targetMoney;
     }
 
 
     #endregion
+
+
+    public void _on_animation_player_animation_finished(StringName animationName){
+        if(animationName=="death"){
+            arenaManager.EndArena();
+        }
+        switch(dashAnimationState){
+            case 1:
+                if(animationName=="initDash"){
+                    dashAnimationState=2;
+                    animPlayer.Play("endDash");
+                }
+            break;
+            case 2:
+                if(animationName=="endDash"){
+                    dashAnimationState=0;
+                }
+            break;
+        }
+    }
 
 
 
@@ -247,39 +281,15 @@ public partial class Player : CharacterBody2D
 
         if (@event.IsActionPressed("spawn_hazard"))
         {
-            if(_arenaManger!=null){
-                _arenaManger.SpawnRandomHazard();
+            if(arenaManager!=null){
+                arenaManager.SpawnRandomHazard();
             }
         }
     }
 
 
     public override void _Ready(){
-        _sprite=GetNode<Sprite2D>("Sprite");
-
-        if(GetNode(arenaManagerPath) is ArenaManager arena){
-            _arenaManger=arena;
-            _arenaManger.playerInstance=this;
-        }
-        else{
-            GD.PushError("arena manager path is missing or invalide");
-        }
-
-
-        if(GetNode(hpBarPath) is ProgressBar hpbar){
-            _hpBar=hpbar;
-        }
-        else{
-            GD.PushError("hp bar path is missing or invalide");
-        }
-
-        if(GetNode(moneyDisplayPath) is Label moneyLabel){
-            _moneyDisplay=moneyLabel;
-        }
-        else{
-            GD.PushError("money display path is missing or invalide");
-        }
-
+        arenaManager.playerInstance=this;
 
         Spawn();
     }
@@ -300,8 +310,20 @@ public partial class Player : CharacterBody2D
             _dashCouldownTimer-=delta;
         }
 
+        if(onDash){
 
-        UpdateItem(it=>it.Update(this,_arenaManger,delta));
+        }
+        else if(dashAnimationState==0){
+            if(_dirVector.X!=0 || _dirVector.Y!=0){
+                animPlayer.Play("move");
+            }
+            else{
+                animPlayer.Play("idle");
+            }
+        }
+
+
+        UpdateItem(it=>it.Update(this,arenaManager,delta));
 
 
         if(actualTimeHP>=0){
@@ -320,25 +342,20 @@ public partial class Player : CharacterBody2D
 
         if(CanMove()){
             UpdateDirVector();
-            _sprite.FlipH=!_horizontalFacing;
+            sprite1.FlipH=sprite2.FlipH=!_horizontalFacing;
 
             // update velocity
             Velocity=MathUtils.approachVector(Velocity,_dirVector * moveSpeed,(float)(delta* moveAcc * 10));
         }
 
         // TODO : real eat animation
-        Rect2 rect2 = _sprite.RegionRect;
-        Vector2 p =  rect2.Position;
-        p.X=onDash?32:0;
-        rect2.Position=p;
-        _sprite.RegionRect=rect2;
 
 
         MoveAndSlide();
 
         // respect arena rediuse
         double magn = Position.Length();
-        Position = Position.Normalized() * (float)Math.Min(magn,_arenaManger.arenaRadius);
+        Position = Position.Normalized() * (float)Math.Min(magn,arenaManager.arenaRadius);
     }
 
     #endregion

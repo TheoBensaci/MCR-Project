@@ -1,27 +1,83 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnjns5dqjes04"]
+[gd_scene load_steps=12 format=3 uid="uid://dnjns5dqjes04"]
 
 [ext_resource type="Script" uid="uid://b4h0ypn113mqb" path="res://script/itemSystem/ItemWrapper.cs" id="1_w7osy"]
 [ext_resource type="Shader" uid="uid://cvw3rheey01wv" path="res://shader/itemShader.gdshader" id="2_fcamh"]
-[ext_resource type="Texture2D" uid="uid://dbomi8f3m8vkp" path="res://ressource/sprite/cat.png" id="3_q5t2h"]
+[ext_resource type="Texture2D" uid="uid://dsnkq30wuo7ee" path="res://ressource/sprite/junk_1.png" id="3_fcamh"]
+[ext_resource type="Texture2D" uid="uid://nsdvrahqvmya" path="res://ressource/sprite/cercle.svg" id="4_q5t2h"]
+[ext_resource type="Texture2D" uid="uid://yur38lt13myr" path="res://ressource/sprite/junk_2.png" id="4_vqxj3"]
+[ext_resource type="Texture2D" uid="uid://cag6ndtc7c0sr" path="res://ressource/sprite/junk_3.png" id="5_7vn5o"]
+[ext_resource type="Texture2D" uid="uid://clhtw51bwmo0f" path="res://ressource/sprite/junk_4.png" id="6_edg58"]
+[ext_resource type="Texture2D" uid="uid://57f6g50rhd14" path="res://ressource/sprite/junk_5.png" id="7_3e3i8"]
+[ext_resource type="Texture2D" uid="uid://dni6gr7figers" path="res://ressource/sprite/junk_6.png" id="8_7ibm3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqxj3"]
 shader = ExtResource("2_fcamh")
 shader_parameter/allow_out_of_bounds = true
-shader_parameter/outline_thickness = 10.0
+shader_parameter/outline_thickness = 0.0
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_272bh"]
 radius = 63.0
 
-[node name="ItemWrapper" type="Node2D"]
+[node name="ItemWrapper" type="Node2D" node_paths=PackedStringArray("spiteContainer")]
 script = ExtResource("1_w7osy")
+spiteContainer = NodePath("Sprite")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(0.07585144, -27)
+
+[node name="Junk_1" type="Sprite2D" parent="Sprite"]
+visible = false
 material = SubResource("ShaderMaterial_vqxj3")
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_q5t2h")
+position = Vector2(1.9073486e-06, 3.8146973e-06)
+scale = Vector2(0.8734568, 0.8734568)
+texture = ExtResource("3_fcamh")
+
+[node name="Junk_2" type="Sprite2D" parent="Sprite"]
+visible = false
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(0.41520882, 59.34855)
+scale = Vector2(0.5371434, 0.5371434)
+texture = ExtResource("4_vqxj3")
+
+[node name="Junk_3" type="Sprite2D" parent="Sprite"]
+visible = false
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(1.9241495, 31)
+scale = Vector2(0.7622862, 0.7622862)
+texture = ExtResource("5_7vn5o")
+
+[node name="Junk_4" type="Sprite2D" parent="Sprite"]
+visible = false
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(1.9241495, 31)
+scale = Vector2(0.7622862, 0.7622862)
+texture = ExtResource("6_edg58")
+
+[node name="Junk_5" type="Sprite2D" parent="Sprite"]
+visible = false
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(-0.07585144, 40)
+scale = Vector2(0.62504554, 0.62504554)
+texture = ExtResource("7_3e3i8")
+
+[node name="Junk_6" type="Sprite2D" parent="Sprite"]
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(-0.07585144, 49)
+scale = Vector2(0.62504554, 0.62504554)
+texture = ExtResource("8_7ibm3")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 0.28235295)
+material = SubResource("ShaderMaterial_vqxj3")
+position = Vector2(0.07585191, 59.000008)
+scale = Vector2(0.114086434, 0.016358359)
+texture = ExtResource("4_q5t2h")
 
 [node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(1.2974173, 1.2974173)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_272bh")

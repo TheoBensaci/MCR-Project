@@ -85,4 +85,4 @@ spawn_hazard={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.03137255, 0.03137255, 0.08235294, 1)
+environment/defaults/default_clear_color=Color(0.3403393, 0.34033933, 0.3403393, 1)

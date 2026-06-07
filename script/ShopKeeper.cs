@@ -29,18 +29,15 @@ public partial class ShopKeeper : Node2D
 
 
     [Export]
-    public NodePath defaultMouthPath { get; set; }
-    private Node2D _defaultMouth;
+    public Node2D defaultMouth { get; set; }
 
 
     [Export]
-    public NodePath eyeMouthPath { get; set; }
-    private Node2D _eyeMouth;
+    public Node2D eyeMouth { get; set; }
 
 
     [Export]
-    public NodePath eyePath { get; set; }
-    private Node2D _eye;
+    public Node2D eye { get; set; }
 
     [Export]
     public Vector2 eyeMovementRadiuse {get;set;}
@@ -51,27 +48,6 @@ public partial class ShopKeeper : Node2D
 
     public override void _Ready(){
 
-        if(GetNode(eyeMouthPath) is Node2D eyeMouth){
-            _eyeMouth=eyeMouth;
-        }
-        else{
-            GD.PushError("eye mouth path is missing or invalide");
-        }
-
-        if(GetNode(eyePath) is Node2D eye){
-            _eye=eye;
-        }
-        else{
-            GD.PushError("eye path is missing or invalide");
-        }
-
-        if(GetNode(defaultMouthPath) is Node2D mouth){
-            _defaultMouth=mouth;
-        }
-        else{
-            GD.PushError("mouth path is missing or invalide");
-        }
-
         _animation=GetNode<AnimationPlayer>("AnimationPlayer");
 
         _animation.Play("Idle");
@@ -79,17 +55,17 @@ public partial class ShopKeeper : Node2D
 
     private void ApplyChangeState(State newState){
         _state=newState;
-        bool eyeMouth=false;
+        bool eyeMouthActive=false;
         if(newState==State.sad){
             _animation.Play("GameOver");
         }
         else{
-            eyeMouth = newState==State.eye;
+            eyeMouthActive = newState==State.eye;
             _animation.Play("ChangeFace");
         }
 
-        _defaultMouth.Visible=!eyeMouth;
-        _eyeMouth.Visible=eyeMouth;
+        defaultMouth.Visible=!eyeMouthActive;
+        eyeMouth.Visible=eyeMouthActive;
 
     }
 
@@ -133,7 +109,7 @@ public partial class ShopKeeper : Node2D
 
         if(_state==State.eye){
             Vector2 eyeDiff = GetViewport().GetCamera2D().GetGlobalMousePosition()-Position;
-            _eye.Position = eyeDiff.Normalized()*eyeMovementRadiuse;
+            eye.Position = eyeDiff.Normalized()*eyeMovementRadiuse;
         }
     }
 

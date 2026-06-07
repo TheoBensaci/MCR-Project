@@ -5,9 +5,13 @@ public partial class ItemWrapper : Node2D
 {
     public Item item = null;
 
+    [Export]
+    public Node2D spiteContainer { get; set; }
+
 
     public void init(Item item){
         this.item=item;
+
     }
 
 

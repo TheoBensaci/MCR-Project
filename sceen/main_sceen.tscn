@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://djoi0c8cadprt"]
+[gd_scene load_steps=29 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/CameraPlacement.cs" id="2_vmb3k"]
@@ -14,23 +14,11 @@ script = ExtResource("2_vmb3k")
 shopKeeperTargetPos = Vector2(0, 2700)
 metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
 
-[sub_resource type="Resource" id="Resource_vmb3k"]
-script = ExtResource("2_vmb3k")
-cameraPos = Vector2(0, 5400)
-shopKeeperTargetPos = Vector2(0, 4900)
-metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
-
 [sub_resource type="Resource" id="Resource_3npiu"]
 script = ExtResource("2_vmb3k")
 cameraPos = Vector2(2700, 2700)
 shopKeeperTargetPos = Vector2(2700, 2200)
 shopKeeperState = 1
-metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
-
-[sub_resource type="Resource" id="Resource_mm3g7"]
-script = ExtResource("2_vmb3k")
-cameraPos = Vector2(0, 2700)
-shopKeeperTargetPos = Vector2(0, 2200)
 metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
 
 [sub_resource type="Resource" id="Resource_n6ppy"]
@@ -39,6 +27,26 @@ cameraPos = Vector2(-2700, 2700)
 shopKeeperTargetPos = Vector2(-2700, 2200)
 shopKeeperState = 2
 metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_mm3g7"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(0, 2700)
+shopKeeperTargetPos = Vector2(0, 2200)
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Resource" id="Resource_vmb3k"]
+script = ExtResource("2_vmb3k")
+cameraPos = Vector2(0, 5400)
+shopKeeperTargetPos = Vector2(0, 4900)
+metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
+
+[sub_resource type="Gradient" id="Gradient_vmb3k"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.03137255, 0.03137255, 0.078431375, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w853a"]
+gradient = SubResource("Gradient_vmb3k")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_wxuq2"]
 
@@ -100,10 +108,10 @@ shader_parameter/color_gardient = SubResource("GradientTexture1D_efxa6")
 [sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
 font_size = 60
 
-[node name="MainSceen" type="Node2D"]
+[node name="MainSceen" type="Node2D" node_paths=PackedStringArray("shopKeeper", "cameraTarget")]
 script = ExtResource("1_nbxoa")
-ShopkeeperPath = NodePath("ShopKeeper")
-CameraTargetPath = NodePath("CameraTarget")
+shopKeeper = NodePath("ShopKeeper")
+cameraTarget = NodePath("CameraTarget")
 CameraPlacement = Dictionary[String, ExtResource("2_vmb3k")]({
 "Arena": SubResource("Resource_w853a"),
 "Bet": SubResource("Resource_3npiu"),
@@ -111,6 +119,12 @@ CameraPlacement = Dictionary[String, ExtResource("2_vmb3k")]({
 "Score": SubResource("Resource_mm3g7"),
 "Shop": SubResource("Resource_vmb3k")
 })
+
+[node name="Background3" type="Sprite2D" parent="."]
+z_index = -100
+position = Vector2(-1.9990234, 1.0002441)
+scale = Vector2(130.3352, 21949.502)
+texture = SubResource("GradientTexture1D_w853a")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.2296, 0.2296, 0.28, 1)
@@ -137,8 +151,9 @@ zoom = Vector2(0.45, 0.45)
 process_callback = 0
 position_smoothing_enabled = true
 
-[node name="ArenaManager" type="Node" parent="."]
+[node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("main")]
 script = ExtResource("3_vmb3k")
+main = NodePath("..")
 arenaRadius = 1100.0
 itemSpawnPadding = 50.0
 minItemSpawnRadius = 200.0
@@ -149,9 +164,10 @@ maxItemNumber = 20
 itemWrapperSceen = ExtResource("4_w853a")
 hazards = Array[PackedScene]([])
 
-[node name="Player" parent="." instance=ExtResource("5_3npiu")]
-hpBarPath = NodePath("../PlayerHpBar")
-moneyDisplayPath = NodePath("../Label")
+[node name="Player" parent="." node_paths=PackedStringArray("arenaManager", "hpBar", "moneyDisplay") instance=ExtResource("5_3npiu")]
+arenaManager = NodePath("../ArenaManager")
+hpBar = NodePath("../PlayerHpBar")
+moneyDisplay = NodePath("../Label")
 
 [node name="Cercle" type="Sprite2D" parent="."]
 z_index = 3

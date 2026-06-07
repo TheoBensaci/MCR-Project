@@ -36,13 +36,16 @@
     - [ _ ] move
     - [ _ ] death
     - [ _ ] spawn
-  - [ _ ] shopkeeper
-    - [ _ ] ask money
-    - [ _ ] selling time
-    - [ _ ] bet
-    - [ _ ] gameover
+    - [ _ ] dash
+  - **[ X ]** shopkeeper
+    - **[ X ]** ask money
+    - **[ X ]** selling time
+    - **[ X ]** bet
+    - **[ X ]** gameover
   - [ _ ] hazard
     - [ _ ] hit box
+  - [ _ ] item
+    - [ _ ] spawn
 
 
 ### Note

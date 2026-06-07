@@ -5,6 +5,9 @@ using System.IO;
 
 public partial class ArenaManager : Node
 {
+    [Export]
+    public MainSceen main;
+
     [ExportSubgroup("arenna")]
     [Export]
     public float arenaRadius { get; set; } = 2000;
@@ -63,6 +66,9 @@ public partial class ArenaManager : Node
     public Godot.Collections.Array<PackedScene> hazards {get;set;}
 
 
+    public RunResume runResume=null;
+
+
     public Vector2 GetRandomPos(){
         return new Vector2(GD.Randf()*2-1,GD.Randf()*2-1).Normalized() *
         ( GD.Randf() * (arenaRadius - (minItemSpawnRadius + itemSpawnPadding)) + minItemSpawnRadius);
@@ -116,6 +122,14 @@ public partial class ArenaManager : Node
     }
 
     public void StartArena(){
+
+        for (int i = 0; i < GetChildCount(); i++)
+        {
+            RemoveChild(GetChild(i));
+        }
+
+        main.ChangeCamera("Arena");
+        runResume=new RunResume();
         for (int i = 0; i < nItemAtSpawn; i++)
         {
             SpawnItem(GetRandomPos());
@@ -123,8 +137,20 @@ public partial class ArenaManager : Node
         if(playerInstance!=null)playerInstance.Spawn();
     }
 
+    public void EndArena(){
+        main.ChangeCamera("Score");
+    }
+
     public override void _Ready(){
         StartArena();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+
+        if(@event.IsActionReleased("t2")){
+            StartArena();
+        }
     }
 
 
