@@ -103,8 +103,6 @@ public partial class ArenaManager : Node
         decorators.Add("Test");
 
 
-        decorators.Add("Speedy");
-
         decorators.Add("Random");
 
 

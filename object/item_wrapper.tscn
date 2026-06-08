@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dnjns5dqjes04"]
+[gd_scene load_steps=16 format=3 uid="uid://dnjns5dqjes04"]
 
 [ext_resource type="Script" uid="uid://b4h0ypn113mqb" path="res://script/itemSystem/ItemWrapper.cs" id="1_w7osy"]
 [ext_resource type="Shader" uid="uid://cvw3rheey01wv" path="res://shader/itemShader.gdshader" id="2_fcamh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://clhtw51bwmo0f" path="res://ressource/sprite/junk_4.png" id="6_edg58"]
 [ext_resource type="Texture2D" uid="uid://57f6g50rhd14" path="res://ressource/sprite/junk_5.png" id="7_3e3i8"]
 [ext_resource type="Texture2D" uid="uid://dni6gr7figers" path="res://ressource/sprite/junk_6.png" id="8_7ibm3"]
+[ext_resource type="Texture2D" uid="uid://0ju01jfrsdoh" path="res://icon.svg" id="10_edg58"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqxj3"]
 shader = ExtResource("2_fcamh")
@@ -18,6 +19,57 @@ shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_272bh"]
 radius = 63.0
+
+[sub_resource type="Animation" id="Animation_edg58"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.07585144, -27)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Icons:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7vn5o"]
 resource_name = "spawn"
@@ -58,44 +110,17 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0, 0.0]
 }
-
-[sub_resource type="Animation" id="Animation_edg58"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Icons:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.2666667, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0.07585144, -27)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3e3i8"]
@@ -105,6 +130,7 @@ _data = {
 }
 
 [node name="ItemWrapper" type="Node2D" node_paths=PackedStringArray("spiteContainer")]
+y_sort_enabled = true
 script = ExtResource("1_w7osy")
 spiteContainer = NodePath("Sprite")
 
@@ -120,6 +146,7 @@ scale = Vector2(0.8734568, 0.8734568)
 texture = ExtResource("3_fcamh")
 
 [node name="Junk_2" type="Sprite2D" parent="Sprite"]
+visible = false
 material = SubResource("ShaderMaterial_vqxj3")
 position = Vector2(0.41520882, 59.34855)
 scale = Vector2(0.5371434, 0.5371434)
@@ -147,7 +174,6 @@ scale = Vector2(0.62504554, 0.62504554)
 texture = ExtResource("7_3e3i8")
 
 [node name="Junk_6" type="Sprite2D" parent="Sprite"]
-visible = false
 material = SubResource("ShaderMaterial_vqxj3")
 position = Vector2(-0.07585144, 49)
 scale = Vector2(0.62504554, 0.62504554)
@@ -171,5 +197,19 @@ shape = SubResource("CircleShape2D_272bh")
 libraries = {
 &"": SubResource("AnimationLibrary_3e3i8")
 }
+
+[node name="Icons" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(0, 101)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Icons"]
+position = Vector2(54.000004, 0)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("10_edg58")
+
+[node name="Sprite2D" type="Sprite2D" parent="Icons"]
+position = Vector2(-52.000004, 3.8146973e-06)
+scale = Vector2(0.640625, 0.640625)
+texture = ExtResource("10_edg58")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

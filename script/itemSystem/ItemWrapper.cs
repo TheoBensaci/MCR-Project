@@ -18,7 +18,7 @@ public partial class ItemWrapper : Node2D
         // get icon
         for (int i = 0; i < spiteContainer.GetChildCount(); i++)
         {
-            spiteContainer.GetChild<Node2D>(i).Visible=i==iri._junkModel;
+            spiteContainer.GetChild<Node2D>(i).Visible=i==iri.GetJunkModel();
         }
 
 

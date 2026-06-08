@@ -33,10 +33,10 @@
 - [ _ ] animation
   - [ _ ] player
     - [ _ ] eat
-    - [ _ ] move
-    - [ _ ] death
-    - [ _ ] spawn
-    - [ _ ] dash
+    - **[ X ]** move
+    - **[ X ]** death
+    - **[ X ]** spawn
+    - **[ X ]** dash
   - **[ X ]** shopkeeper
     - **[ X ]** ask money
     - **[ X ]** selling time
@@ -44,8 +44,8 @@
     - **[ X ]** gameover
   - [ _ ] hazard
     - [ _ ] hit box
-  - [ _ ] item
-    - [ _ ] spawn
+  - **[ X ]** item
+    - **[ X ]** spawn
 
 
 ### Note
@@ -101,7 +101,7 @@ item décoration :
 - (Discard)(BAD) faite : make bad item effect lease rare
 - x (BAD) spike : hurt the player
 - x (BAD) poison : cut the player hp in half
-- (BAD) curse : hurt the player but only if he stop eating for N sec, reset with every eated item
+- x (BAD) curse : hurt the player but only if he stop eating for N sec, reset with every eated item
 - x random : get a random effect (every effect as the same rarity in this case)
 
 i think, bad effect should be rare but earn more money then any effect

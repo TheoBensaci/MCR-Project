@@ -8,4 +8,8 @@ public class TrashBagDecorator : AbstractItemDecorator
     {
         return base.GetPrice() + 10;
     }
+
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().SetJunkModel(0);
+    }
 }

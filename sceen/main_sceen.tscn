@@ -160,6 +160,14 @@ position_smoothing_enabled = true
 script = ExtResource("3_vmb3k")
 main = NodePath("..")
 arenaRadius = 1100.0
+weightBaseItem = Dictionary[String, float]({
+"Can": 1.0,
+"Cigarette": 1.0,
+"LightBall": 1.0,
+"Paper": 1.0,
+"PaperBall": 1.0,
+"TrashBag": 1.0
+})
 itemSpawnPadding = 50.0
 minItemSpawnRadius = 200.0
 spawnItemTime = 2.5
