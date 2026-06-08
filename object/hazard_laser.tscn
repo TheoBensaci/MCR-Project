@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://haz4rdl4zer0"]
+[gd_scene load_steps=3 format=3 uid="uid://ha04rdl40er0"]
 
-[ext_resource type="Script" path="res://script/Hazard.cs" id="1_hazlaser"]
+[ext_resource type="Script" uid="uid://bori2vajj03kq" path="res://script/arena/Hazard.cs" id="1_hazlaser"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hazlaser"]
 size = Vector2(10000, 120)
@@ -17,10 +17,10 @@ color = Color(0, 0.8, 1, 0.7)
 polygon = PackedVector2Array(-5000, -60, 5000, -60, 5000, 60, -5000, 60)
 
 [node name="ActiveShape" type="Polygon2D" parent="."]
+visible = false
 z_index = 2
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-5000, -60, 5000, -60, 5000, 60, -5000, 60)
-visible = false
 
 [node name="DamageZone" type="Area2D" parent="."]
 monitoring = false

@@ -90,31 +90,31 @@ rarity :
 
 item décoration :
 ^ = not sure
-- speed (or fire effect) : go faster for x time
-- tp : make tp on a random spot
-- (rare) lootbox : create a bunch of junk on eat
-- speedy : make go a little faster, the more you eat, the faster you go
-- heal : recover N hp
-- invulerability : prevent dega
-- greedy : make every item eat price x 2, stop if nothing is eated for 0.5sec
+- x speed (or fire effect) : go faster for x time
+- x tp : make tp on a random spot
+- x (rare) lootbox : create a bunch of junk on eat
+- x speedy : make go a little faster, the more you eat, the faster you go
+- x heal : recover N hp
+- x invulerability : prevent dega
+- x greedy : make every item eat price x 2, stop if nothing is eated for 0.5sec
 
-- (BAD) faite : make bad item effect lease rare
-- (BAD) spike : hurt the player
-- (BAD) poison : cut the player hp in half
+- (Discard)(BAD) faite : make bad item effect lease rare
+- x (BAD) spike : hurt the player
+- x (BAD) poison : cut the player hp in half
 - (BAD) curse : hurt the player but only if he stop eating for N sec, reset with every eated item
-- ? : get a random effect (every effect as the same rarity in this case)
+- x random : get a random effect (every effect as the same rarity in this case)
 
 i think, bad effect should be rare but earn more money then any effect
 
 Powerup :
-- price : moyen| prevent X type of damage to damage the player
-- price : pas chère| being hit spawn as chance to spawn a godly item beside the player
-- price : moyen| X item add a little time
-- price : chère| make every item have a N decorator
-- price : moyen| 1.15 * player hp
-- price : pas chère| block 1 damage pare round
-- price : chère| add a small invulerability when eating a item
-- price : pas chère| make N decorator more likly
+- price : moyen     | prevent X type of damage to damage the player
+- price : pas chère | being hit spawn as chance to spawn a godly item beside the player
+- price : moyen     | X item add a little time
+- price : chère     | make every item have a N decorator
+- price : moyen     | 1.15 * player hp
+- price : pas chère | block 1 damage pare round
+- price : chère     | add a small invulerability when eating a item
+- price : pas chère | make N decorator more likly
 
 
 

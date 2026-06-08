@@ -11,7 +11,6 @@ public class UpdatedItemDeco : AbstractItemDecorator
     }
 
     public override void OnEat(Player pl){
-        GD.Print("We updatde");
         base.OnEat(pl);
     }
 
@@ -22,11 +21,9 @@ public class UpdatedItemDeco : AbstractItemDecorator
     public override bool Update(Player player, ArenaManager arena, double delta_t){
         bool next = base.Update(player,arena,delta_t);
         if(_timer>0){
-            GD.Print("Hi :]");
             _timer-=delta_t;
             return true;
         }
-        GD.Print("end :[");
         return next;
     }
 }

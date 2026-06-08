@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://te7q2hofmhuy"]
 
 [ext_resource type="Texture2D" uid="uid://bmf0sqcwxlo5d" path="res://ressource/shopkeeper.png" id="1_7v6wr"]
-[ext_resource type="Script" uid="uid://1icit5i8u458" path="res://script/ShopKeeper.cs" id="1_i0ldg"]
+[ext_resource type="Script" uid="uid://1icit5i8u458" path="res://script/shop/ShopKeeper.cs" id="1_i0ldg"]
 
 [sub_resource type="Animation" id="Animation_588df"]
 resource_name = "ChangeFace"

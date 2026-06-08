@@ -6,10 +6,16 @@ using Godot;
 
 public class BaseItem : Item
 {
-    public List<ItemTag> GetTags()
-    {
-        return new List<ItemTag>();
+
+    public ItemRenderInfo GetRenderInfo(){
+        return new ItemRenderInfo();
     }
+
+
+    public List<string> GetDecoratorsLists(){
+        return new List<string>(){this.GetType().Name};
+    }
+
 
     public int GetPrice()
     {
@@ -21,10 +27,6 @@ public class BaseItem : Item
 
     }
 
-    public List<string> getIcons(){
-        return new List<string>();
-    }
-
     public bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){
         return false;
     }
@@ -32,4 +34,6 @@ public class BaseItem : Item
     public bool Update(Player player, ArenaManager arena, double delta_t){
         return false;
     }
+
+
 }

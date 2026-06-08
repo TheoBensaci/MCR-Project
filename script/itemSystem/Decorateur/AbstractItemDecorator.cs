@@ -13,9 +13,15 @@ public abstract class AbstractItemDecorator : Item
         p_baseItem=baseItem;
     }
 
-    public virtual List<ItemTag> GetTags()
-    {
-        return p_baseItem.GetTags();
+    public virtual ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo();
+    }
+
+
+    public virtual List<string> GetDecoratorsLists(){
+        List<string> r = p_baseItem.GetDecoratorsLists();
+        r.Add(GetType().Name);
+        return r;
     }
 
     public virtual int GetPrice()
@@ -26,10 +32,6 @@ public abstract class AbstractItemDecorator : Item
     public virtual void OnEat(Player pl)
     {
         p_baseItem.OnEat(pl);
-    }
-
-    public virtual List<string> getIcons(){
-        return p_baseItem.getIcons();
     }
 
     public virtual bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){

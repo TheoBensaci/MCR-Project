@@ -1,9 +1,9 @@
 [gd_scene load_steps=29 format=3 uid="uid://djoi0c8cadprt"]
 
-[ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/MainSceen.cs" id="1_nbxoa"]
-[ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/CameraPlacement.cs" id="2_vmb3k"]
+[ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/other/MainSceen.cs" id="1_nbxoa"]
+[ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/other/CameraPlacement.cs" id="2_vmb3k"]
 [ext_resource type="Texture2D" uid="uid://nsdvrahqvmya" path="res://ressource/sprite/cercle.svg" id="2_wxuq2"]
-[ext_resource type="Script" uid="uid://vkstfk3pj6re" path="res://script/ArenaManager.cs" id="3_vmb3k"]
+[ext_resource type="Script" uid="uid://vkstfk3pj6re" path="res://script/arena/ArenaManager.cs" id="3_vmb3k"]
 [ext_resource type="PackedScene" uid="uid://dnjns5dqjes04" path="res://object/item_wrapper.tscn" id="4_w853a"]
 [ext_resource type="PackedScene" uid="uid://b0h71yo1dhyke" path="res://object/player.tscn" id="5_3npiu"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
@@ -131,23 +131,28 @@ modulate = Color(0.2296, 0.2296, 0.28, 1)
 scale = Vector2(2, 2)
 texture = ExtResource("2_wxuq2")
 
-[node name="Background2" type="Sprite2D" parent="."]
+[node name="Background2" type="Sprite2D" parent="Background"]
 modulate = Color(0.2296, 0.2296, 0.28, 1)
 material = SubResource("ShaderMaterial_mm3g7")
-scale = Vector2(1.386236, 1.386236)
+scale = Vector2(0.693118, 0.693118)
 texture = ExtResource("2_wxuq2")
 
-[node name="Background2" type="Sprite2D" parent="Background2"]
+[node name="Background2" type="Sprite2D" parent="Background/Background2"]
 modulate = Color(0.2296, 0.2296, 0.28, 1)
 material = SubResource("ShaderMaterial_mm3g7")
 position = Vector2(-7.6293945e-06, -7.6293945e-06)
 scale = Vector2(0.51576275, 0.51576275)
 texture = ExtResource("2_wxuq2")
 
+[node name="Cercle" type="Sprite2D" parent="Background"]
+z_index = 3
+material = SubResource("ShaderMaterial_272bh")
+texture = ExtResource("2_wxuq2")
+
 [node name="CameraTarget" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="CameraTarget"]
-zoom = Vector2(0.45, 0.45)
+zoom = Vector2(0.575, 0.575)
 process_callback = 0
 position_smoothing_enabled = true
 
@@ -169,12 +174,6 @@ arenaManager = NodePath("../ArenaManager")
 hpBar = NodePath("../PlayerHpBar")
 moneyDisplay = NodePath("../Label")
 
-[node name="Cercle" type="Sprite2D" parent="."]
-z_index = 3
-material = SubResource("ShaderMaterial_272bh")
-scale = Vector2(2, 2)
-texture = ExtResource("2_wxuq2")
-
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
 z_index = 10
 offset_left = -286.0
@@ -185,6 +184,7 @@ value = 10.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="."]
+z_index = 10
 offset_left = -326.0
 offset_top = -1039.0
 offset_right = 341.0
