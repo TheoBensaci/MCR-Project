@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=2560
+window/size/viewport_height=1440
 window/stretch/mode="viewport"
 
 [dotnet]
@@ -85,4 +85,4 @@ spawn_hazard={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.08627451, 0.08627451, 0.16470589, 1)
+environment/defaults/default_clear_color=Color(0.3403393, 0.34033933, 0.3403393, 1)
