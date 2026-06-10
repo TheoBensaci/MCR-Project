@@ -19,7 +19,13 @@ public class ItemRenderInfo{
         return this;
     }
 
-    public List<string>  GetIcon(){
+    public ItemRenderInfo ReplaceIcon(int index,string icon){
+        if(index<0 || index>_icons.Count)return this;
+        _icons[(int)index]=icon;
+        return this;
+    }
+
+    public List<string> GetIcons(){
         return _icons;
     }
 

@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://rqxgmdbegf7m"]
+
+[ext_resource type="Texture2D" uid="uid://deaq1rkh5btph" path="res://ressource/sprite/icons.png" id="1_dnxjw"]
+[ext_resource type="Script" uid="uid://cr1apl3gruwpl" path="res://script/other/IconsLib.cs" id="1_p6sv2"]
+
+[node name="IconsLib" type="Node2D"]
+z_index = 1
+script = ExtResource("1_p6sv2")
+
+[node name="Speed" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0.9333334, 1)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(21, 0, 76, 108)
+
+[node name="Lootbox" type="Sprite2D" parent="."]
+modulate = Color(0.97188574, 0.76522005, 3.85046e-07, 1)
+position = Vector2(0, -4.7683716e-07)
+scale = Vector2(0.54739076, 0.54739076)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(155, 14.296936, 119, 123.703064)
+
+[node name="Heal" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0.6, 1)
+position = Vector2(0, -9.536743e-07)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(7, 180, 85, 90)
+
+[node name="Tp" type="Sprite2D" parent="."]
+modulate = Color(0.68266666, 0.44, 1, 1)
+position = Vector2(-9.536743e-07, 1.1920929e-07)
+scale = Vector2(0.39746284, 0.39746282)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(151.03328, 194, 155.96672, 89)
+
+[node name="Invicibility" type="Sprite2D" parent="."]
+modulate = Color(0, 0.6500001, 1, 1)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(0, 306, 99, 89)
+
+[node name="Acceleration" type="Sprite2D" parent="."]
+modulate = Color(0, 0.89, 0.89, 1)
+scale = Vector2(0.5125, 0.5124999)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(166, 307, 125, 76)
+
+[node name="Random" type="Sprite2D" parent="."]
+position = Vector2(9.536743e-07, 0)
+scale = Vector2(0.84223914, 0.84223914)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(341, 303, 46, 79.12912)
+
+[node name="Greedy" type="Sprite2D" parent="."]
+modulate = Color(0.972549, 0.7647059, 0, 1)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(23, 422, 52, 94)
+
+[node name="Spike" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.33333334, 1)
+position = Vector2(7.6293945e-06, -1.9073486e-06)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(160, 418, 94, 93)
+
+[node name="Poison" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.33333334, 1)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(296, 419, 72, 92)
+
+[node name="Curse" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.33333334, 1)
+position = Vector2(-7.6293945e-06, 0)
+scale = Vector2(0.641, 0.641)
+texture = ExtResource("1_dnxjw")
+region_enabled = true
+region_rect = Rect2(382, 416, 113, 113)

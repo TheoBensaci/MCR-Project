@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://bch0543twubx3"]
+
+[ext_resource type="Script" uid="uid://7qni7s4465vj" path="res://script/other/Card.cs" id="1_6y164"]
+[ext_resource type="Texture2D" uid="uid://bw3rm5wbd8ka4" path="res://ressource/sprite/card.png" id="2_q3xqc"]
+[ext_resource type="FontFile" uid="uid://cnif7uqeqpgdq" path="res://ressource/Om Botak.ttf" id="3_q3xqc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t8r2b"]
+font = ExtResource("3_q3xqc")
+font_size = 50
+
+[node name="Card" type="Button" node_paths=PackedStringArray("desciption", "price")]
+offset_left = 356.0
+offset_top = 640.0
+offset_right = 906.0
+offset_bottom = 1255.0
+scale = Vector2(1.2, 1.2)
+pivot_offset = Vector2(275, 307.5)
+text = "
+"
+flat = true
+autowrap_trim_flags = 0
+script = ExtResource("1_6y164")
+desciption = NodePath("Description")
+price = NodePath("Price")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 553.0
+offset_bottom = 617.0
+texture = ExtResource("2_q3xqc")
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 126.0
+offset_right = 502.0
+offset_bottom = 426.0
+pivot_offset = Vector2(225, 150)
+text = "Incredible power, i swear"
+label_settings = SubResource("LabelSettings_t8r2b")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 485.0
+offset_right = 525.0
+offset_bottom = 585.0
+pivot_offset = Vector2(250, 50)
+text = "0000$"
+label_settings = SubResource("LabelSettings_t8r2b")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_up" from="." to="." method="_on_card_button_up"]

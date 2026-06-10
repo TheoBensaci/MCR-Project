@@ -9,6 +9,10 @@ public class AccelerationDecorator : SpeedDecorator
         _lifeTime=duration;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Acceleration");
+    }
+
 
     public override int GetPrice()
     {

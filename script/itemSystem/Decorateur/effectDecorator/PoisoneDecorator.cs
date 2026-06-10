@@ -6,6 +6,10 @@ public class PoisonDecorator : AbstractItemDecorator
     {
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Poison");
+    }
+
     public override void OnEat(Player pl)
     {
         pl.Damage((float)pl.actualTimeHP/2,DamageType.poison);

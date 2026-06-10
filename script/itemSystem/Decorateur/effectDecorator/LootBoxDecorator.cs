@@ -8,6 +8,10 @@ public class LootBoxDecorator : AbstractItemDecorator
         _amount=amount;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Lootbox");
+    }
+
     public override void OnEat(Player pl)
     {
         ArenaManager arenaManager = pl.arenaManager;

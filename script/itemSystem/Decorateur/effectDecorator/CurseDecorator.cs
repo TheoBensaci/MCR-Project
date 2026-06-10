@@ -11,7 +11,9 @@ public class CurseDecorator : AbstractItemDecorator
         _lifeTime=_duration=duration;
         _amount=amount;
     }
-
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Curse");
+    }
 
     public override int GetPrice()
     {

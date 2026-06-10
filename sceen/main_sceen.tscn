@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://djoi0c8cadprt"]
+[gd_scene load_steps=40 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/other/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/other/CameraPlacement.cs" id="2_vmb3k"]
@@ -8,10 +8,19 @@
 [ext_resource type="PackedScene" uid="uid://b0h71yo1dhyke" path="res://object/player.tscn" id="5_3npiu"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
 [ext_resource type="PackedScene" uid="uid://te7q2hofmhuy" path="res://object/shop_keeper.tscn" id="7_wxuq2"]
+[ext_resource type="PackedScene" uid="uid://m5sg66bw88mw" path="res://object/hazard_explosion.tscn" id="8_3npiu"]
+[ext_resource type="PackedScene" uid="uid://dvkpfn3ye3jai" path="res://object/hazard_lazer.tscn" id="9_w853a"]
+[ext_resource type="FontFile" uid="uid://cnif7uqeqpgdq" path="res://ressource/Om Botak.ttf" id="10_mm3g7"]
+[ext_resource type="Script" uid="uid://s4orh0f252r" path="res://script/other/MoneyText.cs" id="11_n6ppy"]
+[ext_resource type="Script" uid="uid://87bw3df8eles" path="res://script/other/ui/UiManager.cs" id="13_2ihhg"]
+[ext_resource type="PackedScene" uid="uid://bch0543twubx3" path="res://object/card.tscn" id="15_qxaih"]
+[ext_resource type="PackedScene" uid="uid://c6ntlogs2dt71" path="res://object/ui_screen.tscn" id="16_x5kua"]
+[ext_resource type="PackedScene" uid="uid://vbkbdoc6biv8" path="res://object/ui_action.tscn" id="17_ddrob"]
+[ext_resource type="Script" uid="uid://2usyixt7ux2k" path="res://script/other/ui/action/UiActionTest.cs" id="18_5ft8x"]
 
 [sub_resource type="Resource" id="Resource_w853a"]
 script = ExtResource("2_vmb3k")
-shopKeeperTargetPos = Vector2(0, 2700)
+shopKeeperTargetPos = Vector2(10000, 2700)
 metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
 
 [sub_resource type="Resource" id="Resource_3npiu"]
@@ -105,12 +114,36 @@ shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.7999999821184
 shader_parameter/color_gardient = SubResource("GradientTexture1D_efxa6")
 
-[sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
-font_size = 60
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3npiu"]
+bg_color = Color(0.03137255, 0.03137255, 0.078431375, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 0.8666667, 0.1764706, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
-[node name="MainSceen" type="Node2D" node_paths=PackedStringArray("shopKeeper", "cameraTarget")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm3g7"]
+bg_color = Color(1, 0.8666667, 0.1764706, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
+font = ExtResource("10_mm3g7")
+font_size = 60
+font_color = Color(1, 0.8666667, 0.1764706, 1)
+outline_size = 75
+outline_color = Color(0.03137255, 0.03137255, 0.078431375, 1)
+
+[node name="MainSceen" type="Node2D" node_paths=PackedStringArray("shopKeeper", "uiManager", "cameraTarget")]
 script = ExtResource("1_nbxoa")
 shopKeeper = NodePath("ShopKeeper")
+uiManager = NodePath("UIManager")
 cameraTarget = NodePath("CameraTarget")
 CameraPlacement = Dictionary[String, ExtResource("2_vmb3k")]({
 "Arena": SubResource("Resource_w853a"),
@@ -152,11 +185,11 @@ texture = ExtResource("2_wxuq2")
 [node name="CameraTarget" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="CameraTarget"]
-zoom = Vector2(0.575, 0.575)
+zoom = Vector2(0.475, 0.475)
 process_callback = 0
 position_smoothing_enabled = true
 
-[node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("main")]
+[node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("main", "hazardContainer")]
 script = ExtResource("3_vmb3k")
 main = NodePath("..")
 arenaRadius = 1100.0
@@ -168,19 +201,51 @@ weightBaseItem = Dictionary[String, float]({
 "PaperBall": 1.0,
 "TrashBag": 1.0
 })
+weightAddDecorateurItem = Dictionary[String, float]({
+"Acceleration": 1.0,
+"Curse": 0.1,
+"Greedy": 0.75,
+"Heal": 0.25,
+"Invicibility": 0.75,
+"LootBox": 0.1,
+"Poison": 0.1,
+"Random": 0.0,
+"Speed": 1.0,
+"Spike": 0.1,
+"Tp": 0.2
+})
+weightNumberOfDecorateurItem = Dictionary[int, float]({
+0: 4.0,
+1: 3.5,
+2: 3.0,
+3: 1.0,
+4: 0.5
+})
 itemSpawnPadding = 50.0
 minItemSpawnRadius = 200.0
 spawnItemTime = 2.5
+spawnSafeDistance = 250.0
 nItemAtSpawn = 7
 minItemNumber = 4
 maxItemNumber = 20
 itemWrapperSceen = ExtResource("4_w853a")
-hazards = Array[PackedScene]([])
+hazardContainer = NodePath("../HazardContainer")
+actualHazardLevel = 5
+spawnHazardTimeByLevel = Array[float]([5.0, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5])
+hazards = Array[PackedScene]([ExtResource("8_3npiu"), ExtResource("9_w853a")])
+
+[node name="HazardContainer" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(3.0517578e-05, 3.0517578e-05)
+scale = Vector2(2, 2)
+texture = ExtResource("2_wxuq2")
 
 [node name="Player" parent="." node_paths=PackedStringArray("arenaManager", "hpBar", "moneyDisplay") instance=ExtResource("5_3npiu")]
+actualTimeHP = 20.0
+maxTimeHP = 20.0
 arenaManager = NodePath("../ArenaManager")
 hpBar = NodePath("../PlayerHpBar")
-moneyDisplay = NodePath("../Label")
+moneyDisplay = NodePath("../Money")
 
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
 z_index = 10
@@ -188,18 +253,22 @@ offset_left = -286.0
 offset_top = -1165.0
 offset_right = 288.0
 offset_bottom = -1062.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3npiu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mm3g7")
 value = 10.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Money" type="Label" parent="."]
 z_index = 10
 offset_left = -326.0
 offset_top = -1039.0
 offset_right = 341.0
 offset_bottom = -934.0
-text = "999 / 3902193021"
+text = "0000$"
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+uppercase = true
+script = ExtResource("11_n6ppy")
 
 [node name="ShopKeeper" parent="." instance=ExtResource("7_wxuq2")]
 position = Vector2(-367, 287)
@@ -207,7 +276,13 @@ movementSpeed = 3.0
 destinationRadiuse = 400.0
 eyeMovementRadiuse = Vector2(60, 30)
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="UIManager" type="Node" parent="." node_paths=PackedStringArray("screens")]
+script = ExtResource("13_2ihhg")
+screens = {
+"Score": NodePath("ScoreScreen")
+}
+
+[node name="ScoreLabel" type="Label" parent="UIManager"]
 offset_left = -250.0
 offset_top = 2700.0
 offset_right = 250.0
@@ -217,18 +292,18 @@ text = "Score"
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
 
-[node name="ShopLabel" type="Label" parent="."]
+[node name="ShopLabel" type="Label" parent="UIManager"]
 offset_left = -250.0
 offset_top = 5400.0
 offset_right = 250.0
-offset_bottom = 5569.0
+offset_bottom = 5622.0
 pivot_offset = Vector2(250, 50)
 text = "Shop
 "
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
 
-[node name="BetLabel" type="Label" parent="."]
+[node name="BetLabel" type="Label" parent="UIManager"]
 offset_left = 2700.0
 offset_top = 2700.0
 offset_right = 3200.0
@@ -238,7 +313,7 @@ text = "BET"
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
 
-[node name="GameOverLabel" type="Label" parent="."]
+[node name="GameOverLabel" type="Label" parent="UIManager"]
 offset_left = -2700.0
 offset_top = 2700.0
 offset_right = -2200.0
@@ -247,3 +322,19 @@ pivot_offset = Vector2(250, 50)
 text = "Game over "
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+
+[node name="ScoreScreen" parent="UIManager" instance=ExtResource("16_x5kua")]
+offset_left = -500.0
+offset_top = 2200.0
+offset_right = 500.0
+offset_bottom = 3200.0
+
+[node name="Card" parent="UIManager/ScoreScreen" instance=ExtResource("15_qxaih")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 550.0
+offset_bottom = 615.0
+
+[node name="UiAction" parent="UIManager/ScoreScreen" instance=ExtResource("17_ddrob")]
+script = ExtResource("18_5ft8x")

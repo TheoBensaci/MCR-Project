@@ -10,4 +10,5 @@ public partial class CameraPlacement : Resource {
 
     [Export]
     public ShopKeeper.State shopKeeperState {get;set;}
+
 }

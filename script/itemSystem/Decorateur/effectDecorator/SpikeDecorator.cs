@@ -8,6 +8,10 @@ public class SpikeDecorator : AbstractItemDecorator
         _amount=amount;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Spike");
+    }
+
     public override void OnEat(Player pl)
     {
         pl.Damage(_amount,DamageType.spike);

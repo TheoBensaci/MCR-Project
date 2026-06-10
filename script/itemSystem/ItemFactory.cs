@@ -20,7 +20,7 @@ public static class ItemFactory{
         {"Speed",n=>new SpeedDecorator(n,20)},
         {"Heal",n=>new HealDecorator(n,5)},
         {"Invicibility",n=>new InvicibilityDecorator(n,0.2)},
-        {"Greedy",n=>new GreedyDecorator(n,0.5,1)},
+        {"Greedy",n=>new GreedyDecorator(n,1,1)},
         {"Spike",n=>new SpikeDecorator(n,5f)},
         {"Poison",n=>new PoisonDecorator(n)},
         {"Curse",n=>new CurseDecorator(n,1.5,7f)},

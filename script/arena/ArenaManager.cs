@@ -8,6 +8,7 @@ public partial class ArenaManager : Node
     [Export]
     public MainSceen main;
 
+
     [ExportSubgroup("arenna")]
     [Export]
     public float arenaRadius { get; set; } = 2000;
@@ -19,6 +20,8 @@ public partial class ArenaManager : Node
     public Godot.Collections.Dictionary<string, float> weightAddDecorateurItem = new Godot.Collections.Dictionary<string, float>();
     [Export]
     public Godot.Collections.Dictionary<int, float> weightNumberOfDecorateurItem = new Godot.Collections.Dictionary<int, float>();
+
+    public List<string> baseDecorators=new List<string>();
 
 
     [ExportSubgroup("item spawn")]
@@ -32,6 +35,9 @@ public partial class ArenaManager : Node
     [Export]
     public double spawnItemTime { get; set; } = 2;
     private double _spawnItemTimer = 0;
+
+    [Export]
+    public float spawnSafeDistance { get; set; } = 100f;
 
     [Export]
     public int nItemAtSpawn { get; set; } = 20;
@@ -56,10 +62,14 @@ public partial class ArenaManager : Node
     [ExportSubgroup("Hazard")]
 
     [Export]
+    public Node2D hazardContainer;
+
+    [Export]
     public int actualHazardLevel { get; set; } = 0;
 
     [Export]
-    public double spawnHazardTime { get; set; } = 10;
+    public Godot.Collections.Array<double> spawnHazardTimeByLevel = new Godot.Collections.Array<double>();
+
     private double _spawnHazardTimer = 0;
 
     [Export]
@@ -85,6 +95,31 @@ public partial class ArenaManager : Node
         return GetRandomPos(Vector2.Zero,arenaRadius-itemSpawnPadding,minItemSpawnRadius);
     }
 
+    public Vector2 GetSafeRandomPos(){
+        Vector2 result=GetRandomPos();
+        float d = spawnSafeDistance * spawnSafeDistance;
+        bool ok;
+        // safe net
+        for (int j = 0; j < 1000; j++)
+        {
+            ok=true;
+            if(playerInstance!=null)ok = result.DistanceSquaredTo(playerInstance.Position) > d;
+            for (int i = 0; i < GetChildCount(); i++)
+            {
+                if(!ok){
+                    break;
+                }
+                Node2D n = (Node2D)GetChild(i);
+                ok = result.DistanceSquaredTo(n.Position) > d;
+            }
+            if(ok){
+                return result;
+            }
+            result=GetRandomPos();
+        }
+        return result;
+    }
+
     public void SpawnItem(Vector2 pos,string[] banDecorator){
         // make a buffer with a ItemWrapper class
         ItemWrapper buffer = (ItemWrapper)itemWrapperSceen.Instantiate();
@@ -97,14 +132,18 @@ public partial class ArenaManager : Node
             UtilsRandom.GetRandomResult(weightBaseItem,GD.Randf(),"")
         };
 
-        //int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
+        int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
         // add base tag
 
-        decorators.Add("Test");
+        for (int i = 0; i < nDeco; i++)
+        {
+            decorators.Add(UtilsRandom.GetRandomResult(weightAddDecorateurItem,GD.Randf(),""));
+        }
 
-
-        decorators.Add("Random");
-
+        foreach (string item in baseDecorators)
+        {
+            decorators.Add(item);
+        }
 
         foreach (string item in banDecorator)
         {
@@ -119,40 +158,37 @@ public partial class ArenaManager : Node
     }
 
     public void SpawnItem(){
-        SpawnItem(GetRandomPos(),new string[0]);
+        SpawnItem(GetSafeRandomPos(),new string[0]);
     }
 
     public void SpawnHazard(){
-        SpawnHazard(GetRandomPos());
+        SpawnHazard(GetRandomPos(Vector2.Zero,arenaRadius/2,0));
     }
 
     public void SpawnHazard(Vector2 position){
         if(hazards.Count==0)return;
+        PackedScene scene = hazards[(int)(GD.Randi()%hazards.Count)];
 
-        PackedScene scene = hazards[(int)GD.Randi()%hazards.Count];
-
-        Node2D hazard = (Node2D)scene.Instantiate();
-        hazard.Position = position;
-
-        AddChild(hazard);
+        HazardObject hazard = (HazardObject)scene.Instantiate();
+        hazardContainer.AddChild(hazard);
+        hazard.Start();
+        hazard.Position=position;
     }
 
-    public void SpawnRandomHazard(){
-        float angle = GD.Randf() * Mathf.Tau;
-        float dist = GD.Randf() * (arenaRadius - 200) + 100;
-        Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dist;
-        SpawnHazard(pos);
+    public void AddHazardLevel(){
+        actualHazardLevel=Math.Min(actualHazardLevel+1,spawnHazardTimeByLevel.Count-1);
     }
+
 
     public void StartArena(){
 
-        for (int i = 0; i < GetChildCount(); i++)
-        {
-            RemoveChild(GetChild(i));
-        }
+        UtilsRandom.ClearAllChild(this);
+        UtilsRandom.ClearAllChild(hazardContainer);
 
         main.ChangeCamera("Arena");
         runResume=new RunResume();
+        _spawnHazardTimer=0;
+        _spawnItemTimer=0;
         for (int i = 0; i < nItemAtSpawn; i++)
         {
             SpawnItem();
@@ -197,10 +233,12 @@ public partial class ArenaManager : Node
         }
 
         // hazard timer
-        _spawnHazardTimer += delta;
-        if(_spawnHazardTimer >= spawnHazardTime){
-            SpawnHazard();
-            _spawnHazardTimer = 0;
+        if(actualHazardLevel>=0){
+            _spawnHazardTimer += delta;
+            if(_spawnHazardTimer >= spawnHazardTimeByLevel[actualHazardLevel]){
+                SpawnHazard();
+                _spawnHazardTimer = 0;
+            }
         }
 
     }

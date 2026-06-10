@@ -82,7 +82,7 @@ public partial class Player : CharacterBody2D
     public ProgressBar hpBar { get; set; }
 
     [Export]
-    public Label moneyDisplay { get; set; }
+    public MoneyText moneyDisplay { get; set; }
 
 
 
@@ -255,10 +255,6 @@ public partial class Player : CharacterBody2D
         Position = new Vector2(0,0);
 
         Velocity=new Vector2(0,0);
-        money=0;
-
-
-
 
         // update UI
         UpdateHpBarUi();
@@ -316,7 +312,8 @@ public partial class Player : CharacterBody2D
     }
 
     public void UpdateMoneyUI(){
-        moneyDisplay.Text=this.money+" / "+this.arenaManager.targetMoney;
+
+        moneyDisplay.SetMoney(money);
     }
 
 
@@ -363,7 +360,7 @@ public partial class Player : CharacterBody2D
         if (@event.IsActionPressed("spawn_hazard"))
         {
             if(arenaManager!=null){
-                arenaManager.SpawnRandomHazard();
+                arenaManager.SpawnHazard();
             }
         }
     }

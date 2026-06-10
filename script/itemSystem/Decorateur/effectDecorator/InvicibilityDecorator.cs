@@ -8,6 +8,10 @@ public class InvicibilityDecorator : AbstractItemDecorator
         p_amount=amount;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Invicibility");
+    }
+
     public override void OnEat(Player pl)
     {
         pl.SetInvicibility(p_amount);

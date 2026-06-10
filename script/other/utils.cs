@@ -23,4 +23,14 @@ public static class UtilsRandom{
         }
         return defaultValue;
     }
+
+    public static void ClearAllChild(Node parent){
+        int n = parent.GetChildCount();
+        for (int i = 0; i < n; i++)
+        {
+            Node node = parent.GetChild(0);
+            parent.RemoveChild(node);
+            node.QueueFree();
+        }
+    }
 }

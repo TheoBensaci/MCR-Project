@@ -8,6 +8,10 @@ public class SpeedDecorator : AbstractItemDecorator
         p_amount=amount;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Speed");
+    }
+
     public override void OnEat(Player pl)
     {
         pl.actualMovementSpeed+=p_amount;
