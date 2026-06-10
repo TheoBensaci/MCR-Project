@@ -8,7 +8,6 @@ public partial class UiScreen : Control
 
 
     public void ShowScreen(){
-        GD.Print("AA");
         player.Play("show");
         for (int i = 0; i < GetChildCount(); i++)
         {

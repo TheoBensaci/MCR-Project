@@ -8,6 +8,9 @@ public partial class MainSceen : Node2D
     public ShopKeeper shopKeeper;
 
     [Export]
+    public ArenaManager arena;
+
+    [Export]
     public UiManager uiManager;
 
     [ExportSubgroup("Camera")]
@@ -51,7 +54,10 @@ public partial class MainSceen : Node2D
 
     public override void _Ready(){
         ChangeCamera("Arena");
+        arena.main=this;
         shopKeeper.uiManager=uiManager;
+
+        arena.StartArena();
     }
 
 }

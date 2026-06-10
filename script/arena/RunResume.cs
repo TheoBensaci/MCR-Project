@@ -9,10 +9,6 @@ public class RunResume{
     private int _hit = 0;
 
     public RunResume(){
-        foreach (KeyValuePair<string,Func<Item, Item>> item in ItemFactory.decorators)
-        {
-            _itemTracker.Add(item.Key,0);
-        }
     }
 
 
@@ -20,8 +16,10 @@ public class RunResume{
         List<string> decorators = item.GetDecoratorsLists();
         foreach (string itemName in decorators)
         {
-            if(!_itemTracker.ContainsKey(itemName))return;
-            GD.Print(itemName);
+            if(!_itemTracker.ContainsKey(itemName)){
+                _itemTracker.Add(itemName,1);
+                continue;
+            }
             _itemTracker[itemName]++;
         }
     }
@@ -30,8 +28,9 @@ public class RunResume{
         _hit++;
     }
 
-    public Dictionary<string,int> getItemTracker(){
-        return _itemTracker;
+    public int getItemCount(string name){
+        if(!_itemTracker.ContainsKey(name))return 0;
+        return _itemTracker[name];
     }
 
     public int getHit(){

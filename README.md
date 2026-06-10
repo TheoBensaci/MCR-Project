@@ -107,12 +107,12 @@ item décoration :
 i think, bad effect should be rare but earn more money then any effect
 
 Powerup :
-- price : moyen     | prevent X type of damage to damage the player
+- X price : moyen     | prevent X type of damage to damage the player
 - price : pas chère | being hit spawn as chance to spawn a godly item beside the player
 - price : moyen     | X item add a little time
-- price : chère     | make every item have a N decorator
-- price : moyen     | 1.15 * player hp
-- price : pas chère | block 1 damage pare round
+- X price : chère     | make every item have a N decorator
+- X price : moyen     | 1.15 * player hp
+- X price : pas chère | block 1 damage pare round
 - price : chère     | add a small invulerability when eating a item
 - price : pas chère | make N decorator more likly
 

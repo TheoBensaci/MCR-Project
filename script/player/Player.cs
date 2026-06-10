@@ -84,6 +84,9 @@ public partial class Player : CharacterBody2D
     [Export]
     public MoneyText moneyDisplay { get; set; }
 
+    [Export]
+    public float OnHitShake { get; set; }
+
 
 
     [ExportSubgroup("Stats")]
@@ -173,12 +176,14 @@ public partial class Player : CharacterBody2D
         // add new items
         _updatedItems.Add(item);
 
+
         arenaManager.runResume.addItem(item);
 
         // check for healing decorator
         List<string> dec = item.GetDecoratorsLists();
         foreach (string i in dec)
         {
+            GD.Print(i);
             if(healingDecorators.Contains(i)){
                 actualTimeHP+=decoratorHealingAmount;
                 break;
@@ -277,6 +282,9 @@ public partial class Player : CharacterBody2D
         SetInvicibility(onHitInvincibility);
         if(actualArmor>0){
             actualArmor--;
+            if(GetViewport().GetCamera2D() is CameraShake c){
+                c.SetShake(OnHitShake*0.25f);
+            }
             return;
         }
 
@@ -287,6 +295,12 @@ public partial class Player : CharacterBody2D
         if(onHitItemSpawn){
             arenaManager.SpawnItem();
         }
+
+        if(GetViewport().GetCamera2D() is CameraShake camera){
+            camera.SetShake(OnHitShake);
+        }
+
+        arenaManager.runResume.addHit();
     }
 
     public void Heal(float amount){

@@ -5,7 +5,6 @@ using System.IO;
 
 public partial class ArenaManager : Node
 {
-    [Export]
     public MainSceen main;
 
 
@@ -59,6 +58,10 @@ public partial class ArenaManager : Node
     [Export]
     public int targetMoney { get; set; } = 100;
 
+    [Export]
+    public float roundMoneyMultiplyer { get; set; } = 0;
+
+
     [ExportSubgroup("Hazard")]
 
     [Export]
@@ -77,6 +80,8 @@ public partial class ArenaManager : Node
 
 
     public RunResume runResume=null;
+
+    public Bet actualBet;
 
 
     public Vector2 GetRandomPos(Vector2 center, float radiuse, float deadZone){
@@ -182,8 +187,8 @@ public partial class ArenaManager : Node
 
     public void StartArena(){
 
-        UtilsRandom.ClearAllChild(this);
-        UtilsRandom.ClearAllChild(hazardContainer);
+        OtherUtils.ClearAllChild(this);
+        OtherUtils.ClearAllChild(hazardContainer);
 
         main.ChangeCamera("Arena");
         runResume=new RunResume();
@@ -200,9 +205,13 @@ public partial class ArenaManager : Node
         main.ChangeCamera("Score");
     }
 
-    public override void _Ready(){
+    public void NextRound(){
+        // make the difficulter expodential for good mesure
+        targetMoney=(int)(targetMoney*roundMoneyMultiplyer);
         StartArena();
+        AddHazardLevel();
     }
+
 
     public override void _Input(InputEvent @event)
     {

@@ -6,14 +6,12 @@ using Godot;
 
 public static class ItemFactory{
     public static Dictionary<string,Func<Item,Item>> decorators = new Dictionary<string,Func<Item,Item>>{
-        {"Test",n=>new TestItemDeco(n)},
-        {"Update",n=>new UpdatedItemDeco(n)},
-        {"TrashBag",n=>new TrashBagDecorator(n)},
-        {"Paper",n=>new PaperDecorator(n)},
-        {"LightBall",n=>new LightBallDecorator(n)},
-        {"PaperBall",n=>new PaperBallDecorator(n)},
-        {"Cigarette",n=>new CigaretteDecorator(n)},
-        {"Can",n=>new CanDecorator(n)},
+        {"TrashBag",n=>new ModelDecorator(n,0,"TrashBag")},
+        {"Paper",n=>new ModelDecorator(n,2,"Paper")},
+        {"LightBall",n=>new ModelDecorator(n,3,"LightBall")},
+        {"PaperBall",n=>new ModelDecorator(n,4,"PaperBall")},
+        {"Cigarette",n=>new ModelDecorator(n,1,"Cigarette")},
+        {"Can",n=>new ModelDecorator(n,5,"Can")},
         {"Acceleration",n=>new AccelerationDecorator(n,500,0.75)},
         {"Tp",n=>new TpDecorator(n)},
         {"LootBox",n=>new LootBoxDecorator(n,3)},
