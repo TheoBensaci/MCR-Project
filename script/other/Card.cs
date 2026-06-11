@@ -44,7 +44,7 @@ public partial class Card : Button
     public void _on_card_button_up(){
         if(Disabled)return;
         if(action!=null)action.Invoke();
-        Disabled=true;
+        setActive(false);
         this.desciption.Text="";
         this.price.Text="";
         Scale=new Vector2(clickScale,clickScale);

@@ -28,10 +28,10 @@ public abstract class Bet{
 
     public bool Exec(ArenaManager arenaManager){
         if(Check(arenaManager)){
-            arenaManager.playerInstance.money=(int)p_bonnus*arenaManager.playerInstance.money;
+            arenaManager.playerInstance.money=(int)(p_bonnus*arenaManager.playerInstance.money);
             return true;
         }
-        arenaManager.playerInstance.money/=2;
+        arenaManager.playerInstance.money=(int)(arenaManager.playerInstance.money/p_bonnus);
         return false;
     }
 

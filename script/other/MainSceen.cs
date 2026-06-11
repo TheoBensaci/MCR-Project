@@ -34,19 +34,7 @@ public partial class MainSceen : Node2D
     {
 
         if(@event.IsActionReleased("t1")){
-            _placementIndex = (_placementIndex+1)%CameraPlacement.Count;
-
-            int i =0;
-            foreach (string item in CameraPlacement.Keys)
-            {
-                if(i==_placementIndex){
-                    ChangeCamera(item);
-                    GD.Print(item);
-                    break;
-                }
-                i++;
-            }
-            //ChangeCamera(CameraPlacement[CameraPlacement.Keys[0]]);
+            Main.RequestStart();
         }
     }
 

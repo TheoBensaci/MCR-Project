@@ -8,6 +8,8 @@ public partial class Main : Node
 
     private static Main _instance=null;
 
+    private MainSceen _main=null;
+
 
 
     public static void RequestStart(){
@@ -16,7 +18,9 @@ public partial class Main : Node
     }
 
     private void Start(){
-        AddChild(mainSceen.Instantiate());
+        if(_main!=null)RemoveChild(_main);
+        _main =(MainSceen) mainSceen.Instantiate();
+        AddChild(_main);
     }
 
     public override void _Ready(){

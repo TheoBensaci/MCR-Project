@@ -217,7 +217,7 @@ public partial class ArenaManager : Node
     {
 
         if(@event.IsActionReleased("t2")){
-            StartArena();
+            playerInstance.money+=1000;
         }
     }
 
