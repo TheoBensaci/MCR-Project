@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cky06e1o0bmd2"]
+
+[ext_resource type="PackedScene" uid="uid://bch0543twubx3" path="res://object/card.tscn" id="1_enlbh"]
+[ext_resource type="FontFile" uid="uid://cnif7uqeqpgdq" path="res://ressource/Om Botak.ttf" id="2_scwq8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ot1wn"]
+font = ExtResource("2_scwq8")
+font_size = 50
+
+[node name="Card" instance=ExtResource("1_enlbh")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 165.0
+offset_bottom = 184.0
+pivot_offset = Vector2(82.5, 92)
+
+[node name="TextureRect" parent="." index="0"]
+offset_left = -196.24998
+offset_top = -220.5
+offset_right = 356.75
+offset_bottom = 396.5
+rotation = 1.5707964
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(276.5, 308.5)
+
+[node name="Description" parent="." index="1"]
+offset_left = -144.58333
+offset_top = -63.000015
+offset_right = 305.4167
+offset_bottom = 236.99998
+text = "Next"
+label_settings = SubResource("LabelSettings_ot1wn")
+
+[node name="Price" parent="." index="2"]
+visible = false

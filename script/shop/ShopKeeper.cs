@@ -45,6 +45,15 @@ public partial class ShopKeeper : Node2D
     private State _state=State.happy;
     private State _nextState=State.happy;
 
+    private bool _arrive=false;
+
+
+    public UiManager uiManager;
+
+    public string targetPlacement="";
+
+
+
 
     public override void _Ready(){
 
@@ -72,6 +81,12 @@ public partial class ShopKeeper : Node2D
 
     public void ChangeState(State newState){
         _nextState=newState;
+    }
+
+    public void SetPlacement(Vector2 pos, string placementName){
+        targetPlacement=placementName;
+        targetPos=pos;
+        _arrive=false;
     }
 
 
@@ -103,8 +118,10 @@ public partial class ShopKeeper : Node2D
 
         Vector2 diff = realTargetPos - Position;
 
-        if(_nextState!=_state && diff.LengthSquared()<=(destinationRadiuse*destinationRadiuse)){
+        if(!_arrive && diff.LengthSquared()<=(destinationRadiuse*destinationRadiuse)){
             ApplyChangeState(_nextState);
+            uiManager.Show(targetPlacement);
+            _arrive=true;
         }
 
         if(_state==State.eye){

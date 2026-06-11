@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6ntlogs2dt71"]
+
+[ext_resource type="Script" uid="uid://4t25pilovert" path="res://script/other/ui/UiScreen.cs" id="1_1ibx0"]
+
+[sub_resource type="Animation" id="Animation_qkiiu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mkktc"]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.001358e-05, 1.001358e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_1ibx0"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.20000002, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qkiiu"]
+_data = {
+&"RESET": SubResource("Animation_qkiiu"),
+&"hide": SubResource("Animation_mkktc"),
+&"show": SubResource("Animation_1ibx0")
+}
+
+[node name="UiScreen" type="Control" node_paths=PackedStringArray("player")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1000.0
+offset_bottom = 1000.0
+pivot_offset = Vector2(500, 500)
+script = ExtResource("1_1ibx0")
+player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_motion_local = true
+libraries = {
+&"": SubResource("AnimationLibrary_qkiiu")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

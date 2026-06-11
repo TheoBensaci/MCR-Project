@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://djoi0c8cadprt"]
+[gd_scene load_steps=44 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/other/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/other/CameraPlacement.cs" id="2_vmb3k"]
@@ -6,12 +6,25 @@
 [ext_resource type="Script" uid="uid://vkstfk3pj6re" path="res://script/arena/ArenaManager.cs" id="3_vmb3k"]
 [ext_resource type="PackedScene" uid="uid://dnjns5dqjes04" path="res://object/item_wrapper.tscn" id="4_w853a"]
 [ext_resource type="PackedScene" uid="uid://b0h71yo1dhyke" path="res://object/player.tscn" id="5_3npiu"]
+[ext_resource type="Script" uid="uid://cld3cuwqjbbbm" path="res://script/CameraShake.cs" id="5_k1ije"]
 [ext_resource type="Shader" uid="uid://cd2xc0n5mbvds" path="res://shader/background.gdshader" id="6_mm3g7"]
 [ext_resource type="PackedScene" uid="uid://te7q2hofmhuy" path="res://object/shop_keeper.tscn" id="7_wxuq2"]
+[ext_resource type="PackedScene" uid="uid://m5sg66bw88mw" path="res://object/hazard_explosion.tscn" id="8_3npiu"]
+[ext_resource type="PackedScene" uid="uid://dvkpfn3ye3jai" path="res://object/hazard_lazer.tscn" id="9_w853a"]
+[ext_resource type="FontFile" uid="uid://cnif7uqeqpgdq" path="res://ressource/Om Botak.ttf" id="10_mm3g7"]
+[ext_resource type="Script" uid="uid://s4orh0f252r" path="res://script/other/MoneyText.cs" id="11_n6ppy"]
+[ext_resource type="Script" uid="uid://87bw3df8eles" path="res://script/other/ui/UiManager.cs" id="13_2ihhg"]
+[ext_resource type="Script" uid="uid://1vsoq7oiwjem" path="res://script/other/ui/action/UiActionScore.cs" id="15_ddrob"]
+[ext_resource type="PackedScene" uid="uid://bch0543twubx3" path="res://object/card.tscn" id="15_qxaih"]
+[ext_resource type="PackedScene" uid="uid://c6ntlogs2dt71" path="res://object/ui_screen.tscn" id="16_x5kua"]
+[ext_resource type="PackedScene" uid="uid://vbkbdoc6biv8" path="res://object/ui_action.tscn" id="17_ddrob"]
+[ext_resource type="Script" uid="uid://pnhgeen2qsxf" path="res://script/other/ui/action/UiActionShop.cs" id="18_5ft8x"]
+[ext_resource type="PackedScene" uid="uid://cky06e1o0bmd2" path="res://object/smallCard.tscn" id="18_ddrob"]
+[ext_resource type="Script" uid="uid://ccxbre6vqlytx" path="res://script/other/ui/action/UiActionBet.cs" id="20_7k44y"]
 
 [sub_resource type="Resource" id="Resource_w853a"]
 script = ExtResource("2_vmb3k")
-shopKeeperTargetPos = Vector2(0, 2700)
+shopKeeperTargetPos = Vector2(10000, 2700)
 metadata/_custom_type_script = "uid://nwqqdvqbt8r3"
 
 [sub_resource type="Resource" id="Resource_3npiu"]
@@ -48,30 +61,6 @@ colors = PackedColorArray(0.03137255, 0.03137255, 0.078431375, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_w853a"]
 gradient = SubResource("Gradient_vmb3k")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wxuq2"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vmb3k"]
-noise = SubResource("FastNoiseLite_wxuq2")
-seamless = true
-
-[sub_resource type="Gradient" id="Gradient_w853a"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.5273973)
-colors = PackedColorArray(0.14580001, 0.14580001, 0.18, 0.39215687, 0.14400001, 0.14400001, 0.18, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3npiu"]
-gradient = SubResource("Gradient_w853a")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mm3g7"]
-shader = ExtResource("6_mm3g7")
-shader_parameter/pixelation = Vector2(256, 256)
-shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_vmb3k")
-shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
-shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
-shader_parameter/center_pos = Vector2(0.5, 0.5)
-shader_parameter/position_impact = 0.75
-shader_parameter/color_gardient = SubResource("GradientTexture1D_3npiu")
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_7mycd"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_272bh"]
@@ -105,12 +94,61 @@ shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.7999999821184
 shader_parameter/color_gardient = SubResource("GradientTexture1D_efxa6")
 
-[sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
-font_size = 60
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wxuq2"]
 
-[node name="MainSceen" type="Node2D" node_paths=PackedStringArray("shopKeeper", "cameraTarget")]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vmb3k"]
+noise = SubResource("FastNoiseLite_wxuq2")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_w853a"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5273973)
+colors = PackedColorArray(0.14580001, 0.14580001, 0.18, 0.39215687, 0.14400001, 0.14400001, 0.18, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3npiu"]
+gradient = SubResource("Gradient_w853a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mm3g7"]
+shader = ExtResource("6_mm3g7")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_vmb3k")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.75
+shader_parameter/color_gardient = SubResource("GradientTexture1D_3npiu")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3npiu"]
+bg_color = Color(0.03137255, 0.03137255, 0.078431375, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 0.8666667, 0.1764706, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm3g7"]
+bg_color = Color(1, 0.8666667, 0.1764706, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_nbxoa"]
+font = ExtResource("10_mm3g7")
+font_size = 60
+font_color = Color(1, 0.8666667, 0.1764706, 1)
+outline_size = 75
+outline_color = Color(0.03137255, 0.03137255, 0.078431375, 1)
+
+[node name="MainSceen" type="Node2D" node_paths=PackedStringArray("shopKeeper", "arena", "uiManager", "cameraTarget")]
 script = ExtResource("1_nbxoa")
 shopKeeper = NodePath("ShopKeeper")
+arena = NodePath("ArenaManager")
+uiManager = NodePath("UIManager")
 cameraTarget = NodePath("CameraTarget")
 CameraPlacement = Dictionary[String, ExtResource("2_vmb3k")]({
 "Arena": SubResource("Resource_w853a"),
@@ -125,6 +163,12 @@ z_index = -100
 position = Vector2(-1.9990234, 1.0002441)
 scale = Vector2(130.3352, 21949.502)
 texture = SubResource("GradientTexture1D_w853a")
+
+[node name="Cercle" type="Sprite2D" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_272bh")
+scale = Vector2(2, 2)
+texture = ExtResource("2_wxuq2")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.2296, 0.2296, 0.28, 1)
@@ -144,35 +188,74 @@ position = Vector2(-7.6293945e-06, -7.6293945e-06)
 scale = Vector2(0.51576275, 0.51576275)
 texture = ExtResource("2_wxuq2")
 
-[node name="Cercle" type="Sprite2D" parent="Background"]
-z_index = 3
-material = SubResource("ShaderMaterial_272bh")
-texture = ExtResource("2_wxuq2")
-
 [node name="CameraTarget" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="CameraTarget"]
-zoom = Vector2(0.575, 0.575)
+zoom = Vector2(0.475, 0.475)
 process_callback = 0
 position_smoothing_enabled = true
+script = ExtResource("5_k1ije")
+recoverSpeed = 200.0
 
-[node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("main")]
+[node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("hazardContainer")]
 script = ExtResource("3_vmb3k")
-main = NodePath("..")
 arenaRadius = 1100.0
+weightBaseItem = Dictionary[String, float]({
+"Can": 1.0,
+"Cigarette": 1.0,
+"LightBall": 1.0,
+"Paper": 1.0,
+"PaperBall": 1.0,
+"TrashBag": 1.0
+})
+weightAddDecorateurItem = Dictionary[String, float]({
+"Acceleration": 1.0,
+"Curse": 0.1,
+"Greedy": 0.75,
+"Heal": 0.25,
+"Invicibility": 0.75,
+"LootBox": 0.1,
+"Poison": 0.1,
+"Random": 0.0,
+"Speed": 1.0,
+"Spike": 0.1,
+"Tp": 0.2
+})
+weightNumberOfDecorateurItem = Dictionary[int, float]({
+0: 4.0,
+1: 3.5,
+2: 3.0,
+3: 1.0,
+4: 0.5
+})
 itemSpawnPadding = 50.0
 minItemSpawnRadius = 200.0
 spawnItemTime = 2.5
+spawnSafeDistance = 250.0
 nItemAtSpawn = 7
 minItemNumber = 4
 maxItemNumber = 20
 itemWrapperSceen = ExtResource("4_w853a")
-hazards = Array[PackedScene]([])
+targetMoney = 300
+roundMoneyMultiplyer = 2.5
+hazardContainer = NodePath("../HazardContainer")
+spawnHazardTimeByLevel = Array[float]([5.0, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5])
+hazards = Array[PackedScene]([ExtResource("8_3npiu"), ExtResource("9_w853a")])
+
+[node name="HazardContainer" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(3.0517578e-05, 3.0517578e-05)
+scale = Vector2(2, 2)
+texture = ExtResource("2_wxuq2")
 
 [node name="Player" parent="." node_paths=PackedStringArray("arenaManager", "hpBar", "moneyDisplay") instance=ExtResource("5_3npiu")]
+position = Vector2(0, -1)
+actualTimeHP = 20.0
+maxTimeHP = 20.0
 arenaManager = NodePath("../ArenaManager")
 hpBar = NodePath("../PlayerHpBar")
-moneyDisplay = NodePath("../Label")
+moneyDisplay = NodePath("../Money")
+OnHitShake = 50.0
 
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
 z_index = 10
@@ -180,18 +263,22 @@ offset_left = -286.0
 offset_top = -1165.0
 offset_right = 288.0
 offset_bottom = -1062.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3npiu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mm3g7")
 value = 10.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Money" type="Label" parent="."]
 z_index = 10
 offset_left = -326.0
 offset_top = -1039.0
 offset_right = 341.0
 offset_bottom = -934.0
-text = "999 / 3902193021"
+text = "0000$"
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+uppercase = true
+script = ExtResource("11_n6ppy")
 
 [node name="ShopKeeper" parent="." instance=ExtResource("7_wxuq2")]
 position = Vector2(-367, 287)
@@ -199,38 +286,15 @@ movementSpeed = 3.0
 destinationRadiuse = 400.0
 eyeMovementRadiuse = Vector2(60, 30)
 
-[node name="ScoreLabel" type="Label" parent="."]
-offset_left = -250.0
-offset_top = 2700.0
-offset_right = 250.0
-offset_bottom = 2800.0
-pivot_offset = Vector2(250, 50)
-text = "Score"
-label_settings = SubResource("LabelSettings_nbxoa")
-horizontal_alignment = 1
+[node name="UIManager" type="Node" parent="." node_paths=PackedStringArray("screens")]
+script = ExtResource("13_2ihhg")
+screens = {
+"Bet": NodePath("BetScreen"),
+"Score": NodePath("ScoreScreen"),
+"Shop": NodePath("ShopScreen")
+}
 
-[node name="ShopLabel" type="Label" parent="."]
-offset_left = -250.0
-offset_top = 5400.0
-offset_right = 250.0
-offset_bottom = 5569.0
-pivot_offset = Vector2(250, 50)
-text = "Shop
-"
-label_settings = SubResource("LabelSettings_nbxoa")
-horizontal_alignment = 1
-
-[node name="BetLabel" type="Label" parent="."]
-offset_left = 2700.0
-offset_top = 2700.0
-offset_right = 3200.0
-offset_bottom = 2800.0
-pivot_offset = Vector2(250, 50)
-text = "BET"
-label_settings = SubResource("LabelSettings_nbxoa")
-horizontal_alignment = 1
-
-[node name="GameOverLabel" type="Label" parent="."]
+[node name="GameOverLabel" type="Label" parent="UIManager"]
 offset_left = -2700.0
 offset_top = 2700.0
 offset_right = -2200.0
@@ -239,3 +303,130 @@ pivot_offset = Vector2(250, 50)
 text = "Game over "
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+
+[node name="ScoreScreen" parent="UIManager" instance=ExtResource("16_x5kua")]
+offset_left = -500.0
+offset_top = 2200.0
+offset_right = 500.0
+offset_bottom = 3200.0
+
+[node name="Card" parent="UIManager/ScoreScreen" instance=ExtResource("15_qxaih")]
+visible = false
+layout_mode = 0
+offset_left = 228.0
+offset_top = 248.0
+offset_right = 778.0
+offset_bottom = 863.0
+
+[node name="ScoreLabel" type="Label" parent="UIManager/ScoreScreen"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 500.0
+offset_right = 750.0
+offset_bottom = 600.0
+pivot_offset = Vector2(250, 50)
+text = "Score"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="UiAction" parent="UIManager/ScoreScreen" node_paths=PackedStringArray("endMoney", "main") instance=ExtResource("17_ddrob")]
+script = ExtResource("15_ddrob")
+endMoney = NodePath("../ScoreLabel")
+main = NodePath("../../..")
+
+[node name="ShopScreen" parent="UIManager" instance=ExtResource("16_x5kua")]
+offset_left = -500.0
+offset_top = 4900.0
+offset_right = 500.0
+offset_bottom = 5900.0
+
+[node name="money" type="Label" parent="UIManager/ShopScreen"]
+layout_mode = 0
+offset_left = 253.0
+offset_top = -317.0
+offset_right = 753.0
+offset_bottom = -95.0
+pivot_offset = Vector2(250, 50)
+text = "0000$"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="ShopLabel" type="Label" parent="UIManager/ShopScreen"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 500.0
+offset_right = 750.0
+offset_bottom = 722.0
+pivot_offset = Vector2(250, 50)
+text = "Shop
+"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="NextCard" parent="UIManager/ShopScreen" instance=ExtResource("18_ddrob")]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 1102.0
+offset_right = 583.0
+offset_bottom = 1286.0
+
+[node name="UiAction" parent="UIManager/ShopScreen" node_paths=PackedStringArray("money", "itemA", "itemB", "nextCard", "main") instance=ExtResource("17_ddrob")]
+script = ExtResource("18_5ft8x")
+money = NodePath("../money")
+itemA = NodePath("../Card")
+itemB = NodePath("../Card2")
+nextCard = NodePath("../NextCard")
+main = NodePath("../../..")
+
+[node name="Card" parent="UIManager/ShopScreen" instance=ExtResource("15_qxaih")]
+layout_mode = 0
+offset_left = 674.0
+offset_top = 285.0
+offset_right = 1224.0
+offset_bottom = 900.0
+
+[node name="Card2" parent="UIManager/ShopScreen" instance=ExtResource("15_qxaih")]
+layout_mode = 0
+offset_left = -254.0
+offset_top = 283.0
+offset_right = 296.0
+offset_bottom = 898.0
+
+[node name="BetScreen" parent="UIManager" instance=ExtResource("16_x5kua")]
+offset_left = 2336.0
+offset_top = 2200.0
+offset_right = 3336.0
+offset_bottom = 3200.0
+
+[node name="next money" type="Label" parent="UIManager/BetScreen"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -135.0
+offset_right = 1000.0
+offset_bottom = 87.0
+pivot_offset = Vector2(250, 50)
+text = "Shop
+"
+label_settings = SubResource("LabelSettings_nbxoa")
+horizontal_alignment = 1
+
+[node name="NextCard" parent="UIManager/BetScreen" instance=ExtResource("18_ddrob")]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 1102.0
+offset_right = 583.0
+offset_bottom = 1286.0
+
+[node name="UiAction" parent="UIManager/BetScreen" node_paths=PackedStringArray("money", "card", "nextCard", "main") instance=ExtResource("17_ddrob")]
+script = ExtResource("20_7k44y")
+money = NodePath("../next money")
+card = NodePath("../Card")
+nextCard = NodePath("../NextCard")
+main = NodePath("../../..")
+
+[node name="Card" parent="UIManager/BetScreen" instance=ExtResource("15_qxaih")]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 260.0
+offset_right = 778.0
+offset_bottom = 875.0

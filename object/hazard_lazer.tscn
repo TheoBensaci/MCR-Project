@@ -1,0 +1,147 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvkpfn3ye3jai"]
+
+[ext_resource type="Script" uid="uid://cj4if6h28qncs" path="res://script/arena/HazardObject.cs" id="1_istss"]
+[ext_resource type="Texture2D" uid="uid://deaq1rkh5btph" path="res://ressource/sprite/icons.png" id="2_yryd2"]
+
+[sub_resource type="Animation" id="Animation_dbcfx"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_jrm3w"]
+resource_name = "explosion"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shape:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.05, 1.05), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WarningIcon:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_723pu"]
+resource_name = "spawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shape:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.10000001, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shape:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.10000001, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0.3333335, 0.39215684), Color(1, 0.65, 0, 1), Color(0.9999998, 0.107753046, 0.36087987, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageZone:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.20000002),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DamageZone:monitorable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.20000002),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WarningIcon:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.10000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0.3333335, 0.48627448), Color(1, 0, 0.3333335, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k6epq"]
+_data = {
+&"RESET": SubResource("Animation_dbcfx"),
+&"damage": SubResource("Animation_723pu"),
+&"init": SubResource("Animation_jrm3w")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pns70"]
+size = Vector2(11652.75, 115.125)
+
+[node name="Hazard" type="Node2D" node_paths=PackedStringArray("warningIcon", "player")]
+script = ExtResource("1_istss")
+warningIcon = NodePath("WarningIcon")
+player = NodePath("AnimationPlayer")
+animationLibrary = "Explosion"
+initTime = 0.5
+damageType = 5
+damageAmount = 3.0
+
+[node name="Shape" type="Polygon2D" parent="."]
+color = Color(1, 0, 0.3333335, 0.39215684)
+polygon = PackedVector2Array(-6000, -70, 6000, -70, 6000, 70, -6000, 70)
+uv = PackedVector2Array(-40.00006, -40, 48, -40, 48, 31.999985, -40.00006, 31.999985)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_motion_local = true
+libraries = {
+&"Explosion": SubResource("AnimationLibrary_k6epq")
+}
+
+[node name="WarningIcon" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.3333335, 0.48627448)
+z_index = 1
+texture = ExtResource("2_yryd2")
+region_enabled = true
+region_rect = Rect2(160, 418, 94, 93)
+
+[node name="DamageZone" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageZone"]
+visible = false
+shape = SubResource("RectangleShape2D_pns70")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="DamageZone" to="." method="_on_damage_zone_body_entered"]

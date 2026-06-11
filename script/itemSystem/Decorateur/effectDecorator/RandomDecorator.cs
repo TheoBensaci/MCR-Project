@@ -7,6 +7,10 @@ public class RandomDecorator : AbstractItemDecorator
     {
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().ReplaceIcon(p_baseItem.GetRenderInfo().GetIcons().Count-1,"Random");
+    }
+
     public override List<string> GetDecoratorsLists(){
         List<string> r = p_baseItem.GetDecoratorsLists();
         r[^1]=GetType().Name;

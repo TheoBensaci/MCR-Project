@@ -1,38 +1,26 @@
 using Godot;
 
-public class SpeedDecorator : SpeedyDecorator
+public class SpeedDecorator : AbstractItemDecorator
 {
-    private double _lifeTime=0;
-    private bool _ended=false;
-    public SpeedDecorator(Item baseItem,int amount, double duration) : base(baseItem,amount)
+    protected int p_amount;
+    public SpeedDecorator(Item baseItem,int amount) : base(baseItem)
     {
-        _lifeTime=duration;
+        p_amount=amount;
+    }
+
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Speed");
+    }
+
+    public override void OnEat(Player pl)
+    {
+        pl.actualMovementSpeed+=p_amount;
+        base.OnEat(pl);
     }
 
 
     public override int GetPrice()
     {
         return p_baseItem.GetPrice() + 10;
-    }
-
-    public override bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){
-        return true || base.UpdateOnEat(player,eatedItem,arena);
-    }
-
-    public override bool Update(Player player, ArenaManager arena, double delta_t){
-
-        bool next = base.Update(player,arena,delta_t);
-        if(!_ended){
-            if(_lifeTime>0){
-                _lifeTime-=delta_t;
-                return true;
-            }
-            else{
-                _ended=true;
-                player.actualMovementSpeed-=p_amount;
-            }
-        }
-
-        return next;
     }
 }

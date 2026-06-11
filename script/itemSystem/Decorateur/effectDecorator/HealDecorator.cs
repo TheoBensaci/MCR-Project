@@ -8,6 +8,10 @@ public class HealDecorator : AbstractItemDecorator
         p_amount=amount;
     }
 
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Heal");
+    }
+
     public override void OnEat(Player pl)
     {
         pl.Heal(p_amount);

@@ -12,7 +12,9 @@ public class GreedyDecorator : AbstractItemDecorator
         _bonnusAmount=bonnusAmount;
     }
 
-
+    public override ItemRenderInfo GetRenderInfo(){
+        return p_baseItem.GetRenderInfo().AddIcon("Greedy");
+    }
     public override int GetPrice()
     {
         return p_baseItem.GetPrice() + 10;
