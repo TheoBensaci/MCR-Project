@@ -1,5 +1,5 @@
 # ScrapEat - Décorateur
-Auteurs: Théo bensaci, Aurelien Bloch, Nicolas Bovard
+Auteurs: Théo Bensaci, Aurelien Bloch, Nicolas Bovard
 
 ## Structure du projet
 Cette section a été généré par IA et vérifié. Ceci afin de simplifier la compréhension de la structure du projet.
