@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:23 08.06.2026
+ *   Description: player
+ */
+
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -85,6 +91,15 @@ public partial class Player : CharacterBody2D
     public MoneyText moneyDisplay { get; set; }
 
     [Export]
+    public PackedScene iconLib;
+
+    [Export]
+    public float IconHoriontalSpace = 100;
+
+    [Export]
+    public Node2D effectIconContainer { get; set; }
+
+    [Export]
     public float OnHitShake { get; set; }
 
 
@@ -121,6 +136,9 @@ public partial class Player : CharacterBody2D
 
 
     #region Dash
+    /// <summary>
+    /// Start a dash
+    /// </summary>
     public void InitDash(){
         if(isDead || onDash || _dashCouldownTimer>0 || (_dirVector.X==0 && _dirVector.Y==0))return;
         UpdateDirVector();
@@ -131,6 +149,9 @@ public partial class Player : CharacterBody2D
         animPlayer.Play("initDash");
     }
 
+    /// <summary>
+    /// End a dash
+    /// </summary>
     public void EndDash(){
         if(!onDash)return;
         dashAnimationState=1;
@@ -142,11 +163,15 @@ public partial class Player : CharacterBody2D
 
     #region Eat / Item
 
+    /// <summary>
+    /// Udpate item with a given function and clear all item with the check function return {false}
+    /// </summary>
+    /// <param name="check">check function</param>
     private void UpdateItem(Func<Item,bool> check){
         int count = _updatedItems.Count;
         for (int i = 0; i < count;)
         {
-            if(!check(_updatedItems[i])){//_updatedItems[i].UpdateOnEat(this,item,_arenaManger)){
+            if(!check(_updatedItems[i])){
                 _updatedItems[i]=_updatedItems[count-1];
                 _updatedItems.RemoveAt(count-1);
                 count--;
@@ -156,6 +181,10 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    /// <summary>
+    /// Eat a item
+    /// </summary>
+    /// <param name="item"></param>
     public void Eat(Item item){
         if(item==null){
             GD.Print("SAD :[");
@@ -177,7 +206,7 @@ public partial class Player : CharacterBody2D
         _updatedItems.Add(item);
 
 
-        arenaManager.runResume.addItem(item);
+        arenaManager.runResume.AddItem(item);
 
         // check for healing decorator
         List<string> dec = item.GetDecoratorsLists();
@@ -196,6 +225,12 @@ public partial class Player : CharacterBody2D
 
 
     #region Movement
+
+    /// <summary>
+    /// Update direction vector base on input track with the _directionTracker
+    /// </summary>
+    /// <param name="avoidZero">if true, the update never return zero vector</param>
+    /// <returns></returns>
     private Vector2 UpdateDirVector(bool avoidZero = false){
         // get target dir
         int x =0;
@@ -230,6 +265,10 @@ public partial class Player : CharacterBody2D
         return _dirVector;
     }
 
+    /// <summary>
+    /// If the player can move
+    /// </summary>
+    /// <returns></returns>
     public bool CanMove() {
         return !onDash;
     }
@@ -238,6 +277,9 @@ public partial class Player : CharacterBody2D
 
     #region Death and Spawn
 
+    /// <summary>
+    /// Spawn the player
+    /// </summary>
     public void Spawn(){
 
         // clear item
@@ -300,18 +342,29 @@ public partial class Player : CharacterBody2D
             camera.SetShake(OnHitShake);
         }
 
-        arenaManager.runResume.addHit();
+        arenaManager.runResume.AddHit();
     }
 
+    /// <summary>
+    /// Heal the player
+    /// </summary>
+    /// <param name="amount"></param>
     public void Heal(float amount){
         actualTimeHP=Math.Min(actualTimeHP+amount,maxTimeHP);
         UpdateHpBarUi();
     }
 
+    /// <summary>
+    /// Set the invicibility of the player
+    /// </summary>
+    /// <param name="amount"></param>
     public void SetInvicibility(double amount){
         _invincibilityTimer=Math.Max(_invincibilityTimer,amount);
     }
 
+    /// <summary>
+    /// Kill the player
+    /// </summary>
     public void Kill(){
         animPlayer.Play("death");
         isDead=true;
@@ -321,13 +374,61 @@ public partial class Player : CharacterBody2D
 
     #region Ui
 
+    /// <summary>
+    /// Update hp bar
+    /// </summary>
     public void UpdateHpBarUi(){
         hpBar.Value= actualTimeHP/maxTimeHP * 100;
     }
 
+    /// <summary>
+    /// Update money text
+    /// </summary>
     public void UpdateMoneyUI(){
 
         moneyDisplay.SetMoney(money);
+    }
+
+
+    /// <summary>
+    /// Add a icon to the effects icons ui
+    /// </summary>
+    /// <param name="icon">icon name</param>
+    /// <returns>Node created (the icon)</returns>
+    public Node AddEffectIcon(string iconName){
+        IconsLib iconNode = (IconsLib)iconLib.Instantiate();
+        effectIconContainer.AddChild(iconNode);
+        iconNode.SelectIcon(iconName);
+        UpdateIconPlacement();
+        return iconNode;
+    }
+
+    /// <summary>
+    /// Remove a icon from the effect ui
+    /// </summary>
+    /// <param name="icon">icon name</param>
+    public void RemoveEffectIcon(string iconName){
+        for (int i = 0; i < effectIconContainer.GetChildCount(); i++)
+        {
+            if(effectIconContainer.GetChild(i) is IconsLib icon){
+                if(icon.GetIconName()==iconName && !icon.IsQueuedForDeletion()){
+                    icon.QueueFree();
+                    break;
+                }
+            }
+        }
+        UpdateIconPlacement();
+    }
+
+    /// <summary>
+    /// Update icon placement in the effect ui
+    /// </summary>
+    public void UpdateIconPlacement(){
+        for (int i = 0; i < effectIconContainer.GetChildCount(); i++)
+        {
+            Node2D icon = (Node2D)effectIconContainer.GetChild(i);
+            icon.Position=new Vector2(i * IconHoriontalSpace,0);
+        }
     }
 
 

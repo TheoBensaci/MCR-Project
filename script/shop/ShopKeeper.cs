@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:23 08.06.2026
+ *   Description: manage Shop keeper animation
+ */
+
 using Godot;
 using System;
 
@@ -62,6 +68,10 @@ public partial class ShopKeeper : Node2D
         _animation.Play("Idle");
     }
 
+    /// <summary>
+    /// Apply state change
+    /// </summary>
+    /// <param name="newState"></param>
     private void ApplyChangeState(State newState){
         _state=newState;
         bool eyeMouthActive=false;
@@ -79,10 +89,19 @@ public partial class ShopKeeper : Node2D
     }
 
 
+    /// <summary>
+    /// Request a change state
+    /// </summary>
+    /// <param name="newState"></param>
     public void ChangeState(State newState){
         _nextState=newState;
     }
 
+    /// <summary>
+    /// Set target placement
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="placementName"></param>
     public void SetPlacement(Vector2 pos, string placementName){
         targetPlacement=placementName;
         targetPos=pos;

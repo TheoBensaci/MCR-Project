@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 17:03 10.06.2026
+ *   Description: Root
+ */
+
 using Godot;
 using System;
 
@@ -9,7 +15,6 @@ public partial class Main : Node
     private static Main _instance=null;
 
     private MainSceen _main=null;
-
 
 
     public static void RequestStart(){

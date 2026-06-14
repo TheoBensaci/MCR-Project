@@ -15,6 +15,13 @@ public class GreedyDecorator : AbstractItemDecorator
     public override ItemRenderInfo GetRenderInfo(){
         return p_baseItem.GetRenderInfo().AddIcon("Greedy");
     }
+
+    public override void OnEat(Player pl)
+    {
+        pl.AddEffectIcon("Greedy");
+        base.OnEat(pl);
+    }
+
     public override int GetPrice()
     {
         return p_baseItem.GetPrice() + 10;
@@ -36,7 +43,7 @@ public class GreedyDecorator : AbstractItemDecorator
                 return true;
             }
             else{
-                GD.Print("END greedy");
+                player.RemoveEffectIcon("Greedy");
                 _ended=true;
             }
         }

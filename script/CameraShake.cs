@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:56 11.06.2026
+ *   Description: manage camera shake
+ */
+
 using Godot;
 using System;
 

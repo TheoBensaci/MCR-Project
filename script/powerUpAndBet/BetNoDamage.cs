@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:09 11.06.2026
+ *   Description: Bet on the no hit run
+ */
+
 
 
 
@@ -11,7 +17,7 @@ public class BetNoDamage : Bet
 
     public override bool Check(ArenaManager arenaManager)
     {
-        GD.Print("test : " + arenaManager.runResume.getHit());
-        return arenaManager.runResume.getHit()==0;
+        GD.Print("test : " + arenaManager.runResume.GetHit());
+        return arenaManager.runResume.GetHit()==0;
     }
 }

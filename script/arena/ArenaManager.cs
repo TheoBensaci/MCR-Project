@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:23 08.06.2026
+ *   Description: Use to manage the arena
+ */
+
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -14,7 +20,7 @@ public partial class ArenaManager : Node
 
     [ExportSubgroup("decorateur spawn")]
     [Export]
-    public Godot.Collections.Dictionary<string, float> weightBaseItem = new Godot.Collections.Dictionary<string, float>();
+    public Godot.Collections.Dictionary<ItemType, float> weightItemType = new Godot.Collections.Dictionary<ItemType, float>();
     [Export]
     public Godot.Collections.Dictionary<string, float> weightAddDecorateurItem = new Godot.Collections.Dictionary<string, float>();
     [Export]
@@ -84,6 +90,13 @@ public partial class ArenaManager : Node
     public Bet actualBet;
 
 
+    /// <summary>
+    /// Get a random position around a point
+    /// </summary>
+    /// <param name="center">center point</param>
+    /// <param name="radiuse">radiuse of position possible</param>
+    /// <param name="deadZone">center dead zone radiuse</param>
+    /// <returns>random position</returns>
     public Vector2 GetRandomPos(Vector2 center, float radiuse, float deadZone){
         Vector2 result = center + new Vector2(GD.Randf()*2-1,GD.Randf()*2-1).Normalized() *
         ( GD.Randf() * (radiuse - deadZone) + deadZone);
@@ -96,10 +109,18 @@ public partial class ArenaManager : Node
         return result;
     }
 
+    /// <summary>
+    /// Get a random position center in the center of the arena
+    /// </summary>
+    /// <returns>random position</returns>
     public Vector2 GetRandomPos(){
         return GetRandomPos(Vector2.Zero,arenaRadius-itemSpawnPadding,minItemSpawnRadius);
     }
 
+    /// <summary>
+    /// Get a random possition in the arena which is not on top of any item or the player
+    /// </summary>
+    /// <returns>random position</returns>
     public Vector2 GetSafeRandomPos(){
         Vector2 result=GetRandomPos();
         float d = spawnSafeDistance * spawnSafeDistance;
@@ -125,6 +146,11 @@ public partial class ArenaManager : Node
         return result;
     }
 
+    /// <summary>
+    /// Spawn a item with a random amount decorator
+    /// </summary>
+    /// <param name="pos">position of the item</param>
+    /// <param name="banDecorator">decorator this can't have</param>
     public void SpawnItem(Vector2 pos,string[] banDecorator){
         // make a buffer with a ItemWrapper class
         ItemWrapper buffer = (ItemWrapper)itemWrapperSceen.Instantiate();
@@ -133,9 +159,7 @@ public partial class ArenaManager : Node
         buffer.Position = pos;
 
         // generate decorateurs
-        List<string> decorators = new List<string>(){
-            UtilsRandom.GetRandomResult(weightBaseItem,GD.Randf(),"")
-        };
+        List<string> decorators = new List<string>();
 
         int nDeco = UtilsRandom.GetRandomResult(weightNumberOfDecorateurItem,GD.Randf(),0);
         // add base tag
@@ -159,8 +183,9 @@ public partial class ArenaManager : Node
         AddChild(buffer);
 
         // create item
-        buffer.init(ItemFactory.CreateItem(decorators.ToArray()));
+        buffer.init(ItemFactory.CreateItem(UtilsRandom.GetRandomResult(weightItemType,GD.Randf(),ItemType.none),decorators.ToArray()));
     }
+
 
     public void SpawnItem(){
         SpawnItem(GetSafeRandomPos(),new string[0]);
@@ -170,6 +195,10 @@ public partial class ArenaManager : Node
         SpawnHazard(GetRandomPos(Vector2.Zero,arenaRadius/2,0));
     }
 
+    /// <summary>
+    /// Spawn a random hazard
+    /// </summary>
+    /// <param name="position">position of the hazard</param>
     public void SpawnHazard(Vector2 position){
         if(hazards.Count==0)return;
         PackedScene scene = hazards[(int)(GD.Randi()%hazards.Count)];
@@ -180,11 +209,17 @@ public partial class ArenaManager : Node
         hazard.Position=position;
     }
 
+    /// <summary>
+    /// augment the hazard level
+    /// </summary>
     public void AddHazardLevel(){
         actualHazardLevel=Math.Min(actualHazardLevel+1,spawnHazardTimeByLevel.Count-1);
     }
 
 
+    /// <summary>
+    /// Start the arena run
+    /// </summary>
     public void StartArena(){
 
         OtherUtils.ClearAllChild(this);
@@ -201,11 +236,17 @@ public partial class ArenaManager : Node
         if(playerInstance!=null)playerInstance.Spawn();
     }
 
+    /// <summary>
+    /// End the areana run
+    /// </summary>
     public void EndArena(){
         main.ChangeCamera("Score");
     }
 
-    public void NextRound(){
+    /// <summary>
+    /// prepare the arena for the next run
+    /// </summary>
+    public void PrepareNextRun(){
         // make the difficulter expodential for good mesure
         targetMoney=(int)(targetMoney*roundMoneyMultiplyer);
         StartArena();

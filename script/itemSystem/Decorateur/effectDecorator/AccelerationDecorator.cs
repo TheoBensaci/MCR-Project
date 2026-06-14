@@ -1,3 +1,4 @@
+
 using Godot;
 
 public class AccelerationDecorator : SpeedDecorator
@@ -19,6 +20,12 @@ public class AccelerationDecorator : SpeedDecorator
         return p_baseItem.GetPrice() + 10;
     }
 
+    public override void OnEat(Player pl)
+    {
+        pl.AddEffectIcon("Acceleration");
+        base.OnEat(pl);
+    }
+
     public override bool UpdateOnEat(Player player, Item eatedItem, ArenaManager arena){
         return true || base.UpdateOnEat(player,eatedItem,arena);
     }
@@ -34,6 +41,7 @@ public class AccelerationDecorator : SpeedDecorator
             else{
                 _ended=true;
                 player.actualMovementSpeed-=p_amount;
+                player.RemoveEffectIcon("Acceleration");
             }
         }
 

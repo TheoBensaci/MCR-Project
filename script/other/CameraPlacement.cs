@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:23 08.06.2026
+ *   Description: use to set camera placement, shopkeeper placement and shopkeeper state
+ */
+
 using Godot;
 
 [GlobalClass]

@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 10:19 04.06.2026
+ *   Description: Use to make a item simpler
+ */
+
 
 
 using System;
@@ -5,13 +11,9 @@ using System.Collections.Generic;
 using Godot;
 
 public static class ItemFactory{
+
+    // big list for function use to randomise decorators put on the item
     public static Dictionary<string,Func<Item,Item>> decorators = new Dictionary<string,Func<Item,Item>>{
-        {"TrashBag",n=>new ModelDecorator(n,0,"TrashBag")},
-        {"Paper",n=>new ModelDecorator(n,2,"Paper")},
-        {"LightBall",n=>new ModelDecorator(n,3,"LightBall")},
-        {"PaperBall",n=>new ModelDecorator(n,4,"PaperBall")},
-        {"Cigarette",n=>new ModelDecorator(n,1,"Cigarette")},
-        {"Can",n=>new ModelDecorator(n,5,"Can")},
         {"Acceleration",n=>new AccelerationDecorator(n,500,0.75)},
         {"Tp",n=>new TpDecorator(n)},
         {"LootBox",n=>new LootBoxDecorator(n,3)},
@@ -42,8 +44,14 @@ public static class ItemFactory{
         }}
     };
 
-    public static Item CreateItem(string[] decoratorNames){
-        Item item = new BaseItem();
+    /// <summary>
+    /// Create a item with a set of decorators
+    /// </summary>
+    /// <param name="type">type of the item</param>
+    /// <param name="decoratorNames">list of decorators (names)</param>
+    /// <returns>item created</returns>
+    public static Item CreateItem(ItemType type,string[] decoratorNames){
+        Item item = new BaseItem(type);
         foreach (string name in decoratorNames)
         {
             if(decorators.ContainsKey(name)){
