@@ -78,7 +78,7 @@ Cette section a été généré par IA et vérifié. Ceci afin de simplifier la 
 
 ## Contexte du projet
 
-ScrapEat est un jeu réalisé avec Godot 4.5 en C# implémentant le pattern décorateur. Le projet repose sur une boucle en deux phases. La première phase se déroule dans une arène où le joueur peut se déplacer et effectuer un dash. Le but est de manger les déchêts aparaissant aléatoirement sur la carte en passant dessus. 
+ScrapEat est un jeu réalisé avec Godot 4.5 en C# implémentant le pattern décorateur. Le projet repose sur une boucle en deux phases. La première phase se déroule dans une arène où le joueur peut se déplacer et effectuer un dash. Le but est de manger les déchêts aparaissant aléatoirement sur la carte en passant dessus.
 
 ![](Images/game.png)
 
@@ -110,7 +110,7 @@ ShopKeeper gère la phase marchande. Il se déplace vers une cible définie par 
 
 ## UML
 
-![](Images/UML_genere.png)
+![](./uml.png)
 
 ## Mise en œuvre du modèle décorateur
 
@@ -134,7 +134,7 @@ La fabrique ItemFactory reçoit une liste de noms de décorateurs. Elle part tou
 
 Le système de rendu est séparé des effets. `ItemRenderInfo` stocke le model et les icônes. Les décorateurs de type `ModelDecorator` et `effectDecorator` modifient cette structure en ajoutant ou remplaçant des informations visuelles, puis `ItemWrapper` lit ces données pour afficher le bon sprite et les bonnes icônes dans la scène.
 
-Les effets sont répartis sur plusieurs points de contrôle. `OnEat` gère les effets instantanés. `UpdateOnEat` est appelé sur les items déjà actifs lorsqu'un nouvel item est mangé. `Update` est appelé à chaque frame pour les effets qui durent dans le temps.  
+Les effets sont répartis sur plusieurs points de contrôle. `OnEat` gère les effets instantanés. `UpdateOnEat` est appelé sur les items déjà actifs lorsqu'un nouvel item est mangé. `Update` est appelé à chaque frame pour les effets qui durent dans le temps.
 Ce découpage permet de gérer proprement les buffs/amlus temporaires, les buffs/malus retardés et les mécaniques cumulatives.
 
 ### Liste des effets des items - Décorateurs
@@ -170,18 +170,15 @@ Lorsque le joueur mange un item, l'item exécute d'abord son effet immédiat. Le
 
 Le projet se lance depuis Godot avec la scène principale définie dans project.godot.
 
-**Contrôles**:  
+**Contrôles**:
 - W, A, S, D pour se déplacer.
 - Espace pour déclencher le dash
 - 1 pour relancer la partie via Main.RequestStart.
-- 2 pour ajouter de l'argent de debug.
-- P pour faire apparaître un hazard de debug.
 
 **Flux**:
 
-![](Images/flux.png)
+![](./gameloop.png)
 
-*Image générée avec Gemini* 
 
 
 ## Conclusion

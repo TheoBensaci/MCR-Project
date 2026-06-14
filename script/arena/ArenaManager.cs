@@ -254,14 +254,6 @@ public partial class ArenaManager : Node
     }
 
 
-    public override void _Input(InputEvent @event)
-    {
-
-        if(@event.IsActionReleased("t2")){
-            playerInstance.money+=1000;
-        }
-    }
-
 
     public override void _Process(double delta){
         if(playerInstance==null || playerInstance.isDead)return;
