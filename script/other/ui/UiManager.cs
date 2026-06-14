@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 20:31 10.06.2026
+ *   Description: manage
+ */
+
 using Godot;
 using System;
 
@@ -8,7 +14,6 @@ public partial class UiManager : Node
 
 
     public void Show(string name){
-        GD.Print(name);
         foreach (string item in screens.Keys)
         {
             if(item==name){

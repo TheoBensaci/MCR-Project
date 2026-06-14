@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:23 08.06.2026
+ *   Description: manage main sceen
+ */
+
 using Godot;
 using System;
 
@@ -22,6 +28,10 @@ public partial class MainSceen : Node2D
     private int _placementIndex=0;
 
 
+    /// <summary>
+    /// Change camera placement to set camera placement
+    /// </summary>
+    /// <param name="targetName">name of target</param>
     public void ChangeCamera(string targetName){
         if(CameraPlacement.ContainsKey(targetName)){
             cameraTarget.Position=CameraPlacement[targetName].cameraPos;

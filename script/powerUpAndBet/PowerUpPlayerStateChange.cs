@@ -1,3 +1,8 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:11 11.06.2026
+ */
+
 using System;
 
 public class PowerUpHpUp : PowerUp

@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:38 11.06.2026
+ *   Description: ui action for the bet screen
+ */
+
 using Godot;
 using System;
 
@@ -16,14 +22,14 @@ public partial class UiActionBet : UiAction
         nextCard.setActive(true);
         nextCard.SetValue("Next");
         nextCard.action=()=>{
-            main.arena.NextRound();
+            main.arena.PrepareNextRun();
         };
 
         // gen shop
         Bet bet = Bet.bets[GD.Randi()%Bet.bets.Length];
         card.SetValue(bet.GetDescritption(),"",()=>{
             main.arena.actualBet=bet;
-            main.arena.NextRound();
+            main.arena.PrepareNextRun();
         }).setActive(true);
     }
 

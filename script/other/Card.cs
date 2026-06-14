@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 20:23 10.06.2026
+ *   Description: simple card buttons
+ */
+
 using Godot;
 using System;
 
@@ -33,6 +39,13 @@ public partial class Card : Button
     public Action action;
 
 
+    /// <summary>
+    /// Set card value
+    /// </summary>
+    /// <param name="desciption">descritpion of the card</param>
+    /// <param name="price">price of the card</param>
+    /// <param name="action">onclick action of the card</param>
+    /// <returns></returns>
     public Card SetValue(string desciption="", string price="", Action action=null){
         this.desciption.Text=desciption;
         this.price.Text=price;
@@ -55,6 +68,11 @@ public partial class Card : Button
     }
 
 
+    /// <summary>
+    /// Set card color
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
     private Card setColor(Color color){
         price.LabelSettings.FontColor=color;
         desciption.LabelSettings.FontColor=color;
@@ -65,6 +83,11 @@ public partial class Card : Button
     }
 
 
+    /// <summary>
+    /// Set if the card is disabeled or not
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
     public Card setActive(bool state){
         Disabled=!state;
         return setColor(state?enableColor:disabelColor);

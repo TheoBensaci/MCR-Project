@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 22:09 01.06.2026
+ *   Description: abstract of every decorator
+ */
+
 
 
 using System;
@@ -40,5 +46,10 @@ public abstract class AbstractItemDecorator : Item
 
     public virtual bool Update(Player player, ArenaManager arena, double delta_t){
         return p_baseItem.Update(player,arena,delta_t);
+    }
+
+    public ItemType GetItemType()
+    {
+        return p_baseItem.GetItemType();
     }
 }

@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 23:42 10.06.2026
+ *   Description: ui action for the shop screen
+ */
+
 using Godot;
 using System;
 
@@ -31,6 +37,12 @@ public partial class UiActionShop : UiAction
         update();
     }
 
+    /// <summary>
+    /// set a shp card
+    /// </summary>
+    /// <param name="card">card</param>
+    /// <param name="money">actual money of the player</param>
+    /// <returns></returns>
     private int SetShopCard(Card card, int money){
         PowerUp powerUp = PowerUp.powerups[GD.Randi()%PowerUp.powerups.Length];
         card.SetValue(powerUp.GetDescritption(),powerUp.GetCost().ToString("D4")+"$",()=>{
@@ -39,6 +51,9 @@ public partial class UiActionShop : UiAction
         return powerUp.GetCost();
     }
 
+    /// <summary>
+    /// update card
+    /// </summary>
     private void update(){
         money.Text=main.arena.playerInstance.money.ToString("D4")+"$";
         itemA.setActive(main.arena.playerInstance.money>_prices[0]);

@@ -15,6 +15,12 @@ public class CurseDecorator : AbstractItemDecorator
         return p_baseItem.GetRenderInfo().AddIcon("Curse");
     }
 
+    public override void OnEat(Player pl)
+    {
+        pl.AddEffectIcon("Curse");
+        base.OnEat(pl);
+    }
+
     public override int GetPrice()
     {
         return p_baseItem.GetPrice() + 10;
@@ -35,6 +41,7 @@ public class CurseDecorator : AbstractItemDecorator
                 return true;
             }
             else{
+                player.RemoveEffectIcon("Curse");
                 player.Damage(_amount,DamageType.curse,true);
                 _ended=true;
             }

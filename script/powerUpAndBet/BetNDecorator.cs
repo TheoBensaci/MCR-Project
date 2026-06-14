@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:04 11.06.2026
+ *   Description: Bet on the Number of decorator T eated by run
+ */
+
 
 
 
@@ -15,7 +21,7 @@ public class BetNDecorator : Bet
 
     public override bool Check(ArenaManager arenaManager)
     {
-        GD.Print("Check : "+arenaManager.runResume.getItemCount(_name));
-        return arenaManager.runResume.getItemCount(_name)>=_amount;
+        GD.Print("Check : "+arenaManager.runResume.GetDecoratorCount(_name));
+        return arenaManager.runResume.GetDecoratorCount(_name)>=_amount;
     }
 }

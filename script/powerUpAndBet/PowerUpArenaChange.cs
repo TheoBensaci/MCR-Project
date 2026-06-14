@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 00:18 11.06.2026
+ *   Description: add base decorator to every item
+ */
+
 using System;
 
 public class PowerBaseDecorator : PowerUp

@@ -1,3 +1,9 @@
+/**
+ *   Autheur: Theo Bensaci
+ *   Date: 07:46 10.06.2026
+ *   Description: use to manage hazard object
+ */
+
 using Godot;
 using System;
 

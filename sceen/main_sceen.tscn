@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://djoi0c8cadprt"]
+[gd_scene load_steps=47 format=3 uid="uid://djoi0c8cadprt"]
 
 [ext_resource type="Script" uid="uid://ceomk5qrgfsuy" path="res://script/other/MainSceen.cs" id="1_nbxoa"]
 [ext_resource type="Script" uid="uid://nwqqdvqbt8r3" path="res://script/other/CameraPlacement.cs" id="2_vmb3k"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://m5sg66bw88mw" path="res://object/hazard_explosion.tscn" id="8_3npiu"]
 [ext_resource type="PackedScene" uid="uid://dvkpfn3ye3jai" path="res://object/hazard_lazer.tscn" id="9_w853a"]
 [ext_resource type="FontFile" uid="uid://cnif7uqeqpgdq" path="res://ressource/Om Botak.ttf" id="10_mm3g7"]
+[ext_resource type="PackedScene" uid="uid://rqxgmdbegf7m" path="res://object/icons_lib.tscn" id="11_6xtvt"]
 [ext_resource type="Script" uid="uid://s4orh0f252r" path="res://script/other/MoneyText.cs" id="11_n6ppy"]
 [ext_resource type="Script" uid="uid://87bw3df8eles" path="res://script/other/ui/UiManager.cs" id="13_2ihhg"]
 [ext_resource type="Script" uid="uid://1vsoq7oiwjem" path="res://script/other/ui/action/UiActionScore.cs" id="15_ddrob"]
@@ -19,8 +20,10 @@
 [ext_resource type="PackedScene" uid="uid://c6ntlogs2dt71" path="res://object/ui_screen.tscn" id="16_x5kua"]
 [ext_resource type="PackedScene" uid="uid://vbkbdoc6biv8" path="res://object/ui_action.tscn" id="17_ddrob"]
 [ext_resource type="Script" uid="uid://pnhgeen2qsxf" path="res://script/other/ui/action/UiActionShop.cs" id="18_5ft8x"]
+[ext_resource type="Script" uid="uid://dtl4wvukxsoys" path="res://script/other/ui/action/UiActionGameOver.cs" id="18_60pe2"]
 [ext_resource type="PackedScene" uid="uid://cky06e1o0bmd2" path="res://object/smallCard.tscn" id="18_ddrob"]
 [ext_resource type="Script" uid="uid://ccxbre6vqlytx" path="res://script/other/ui/action/UiActionBet.cs" id="20_7k44y"]
+[ext_resource type="Texture2D" uid="uid://b3njp3vbb5bjs" path="res://ressource/commands.png" id="22_ar7l7"]
 
 [sub_resource type="Resource" id="Resource_w853a"]
 script = ExtResource("2_vmb3k")
@@ -200,13 +203,13 @@ recoverSpeed = 200.0
 [node name="ArenaManager" type="Node" parent="." node_paths=PackedStringArray("hazardContainer")]
 script = ExtResource("3_vmb3k")
 arenaRadius = 1100.0
-weightBaseItem = Dictionary[String, float]({
-"Can": 1.0,
-"Cigarette": 1.0,
-"LightBall": 1.0,
-"Paper": 1.0,
-"PaperBall": 1.0,
-"TrashBag": 1.0
+weightItemType = Dictionary[int, float]({
+0: 1.0,
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 1.0,
+5: 1.0
 })
 weightAddDecorateurItem = Dictionary[String, float]({
 "Acceleration": 1.0,
@@ -248,13 +251,18 @@ position = Vector2(3.0517578e-05, 3.0517578e-05)
 scale = Vector2(2, 2)
 texture = ExtResource("2_wxuq2")
 
-[node name="Player" parent="." node_paths=PackedStringArray("arenaManager", "hpBar", "moneyDisplay") instance=ExtResource("5_3npiu")]
+[node name="PlayerEffectContainer" type="Node2D" parent="."]
+position = Vector2(-2056, -1120)
+
+[node name="Player" parent="." node_paths=PackedStringArray("arenaManager", "hpBar", "moneyDisplay", "effectIconContainer") instance=ExtResource("5_3npiu")]
 position = Vector2(0, -1)
 actualTimeHP = 20.0
 maxTimeHP = 20.0
 arenaManager = NodePath("../ArenaManager")
 hpBar = NodePath("../PlayerHpBar")
 moneyDisplay = NodePath("../Money")
+iconLib = ExtResource("11_6xtvt")
+effectIconContainer = NodePath("../PlayerEffectContainer")
 OnHitShake = 50.0
 
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
@@ -290,19 +298,38 @@ eyeMovementRadiuse = Vector2(60, 30)
 script = ExtResource("13_2ihhg")
 screens = {
 "Bet": NodePath("BetScreen"),
+"GameOver": NodePath("GameOver"),
 "Score": NodePath("ScoreScreen"),
 "Shop": NodePath("ShopScreen")
 }
 
-[node name="GameOverLabel" type="Label" parent="UIManager"]
-offset_left = -2700.0
-offset_top = 2700.0
-offset_right = -2200.0
-offset_bottom = 2800.0
+[node name="GameOver" parent="UIManager" instance=ExtResource("16_x5kua")]
+offset_left = -3123.0
+offset_top = 2241.0
+offset_right = -2123.0
+offset_bottom = 3241.0
+
+[node name="GameOverLabel" type="Label" parent="UIManager/GameOver"]
+layout_mode = 0
+offset_left = 251.0
+offset_top = 459.0
+offset_right = 751.0
+offset_bottom = 559.0
 pivot_offset = Vector2(250, 50)
 text = "Game over "
 label_settings = SubResource("LabelSettings_nbxoa")
 horizontal_alignment = 1
+
+[node name="UiAction" parent="UIManager/GameOver" node_paths=PackedStringArray("nextCard") instance=ExtResource("17_ddrob")]
+script = ExtResource("18_60pe2")
+nextCard = NodePath("../NextCard")
+
+[node name="NextCard" parent="UIManager/GameOver" instance=ExtResource("18_ddrob")]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 1102.0001
+offset_right = 583.0
+offset_bottom = 1286.0001
 
 [node name="ScoreScreen" parent="UIManager" instance=ExtResource("16_x5kua")]
 offset_left = -500.0
@@ -430,3 +457,9 @@ offset_left = 228.0
 offset_top = 260.0
 offset_right = 778.0
 offset_bottom = 875.0
+
+[node name="Commands" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.20784314)
+position = Vector2(-1783, 804)
+scale = Vector2(0.6986755, 0.6986755)
+texture = ExtResource("22_ar7l7")

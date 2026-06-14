@@ -7,6 +7,12 @@ using Godot;
 public class BaseItem : Item
 {
 
+    private ItemType _type;
+
+    public BaseItem(ItemType type){
+        _type=type;
+    }
+
     public ItemRenderInfo GetRenderInfo(){
         return new ItemRenderInfo();
     }
@@ -35,5 +41,8 @@ public class BaseItem : Item
         return false;
     }
 
-
+    public ItemType GetItemType()
+    {
+        return _type;
+    }
 }
